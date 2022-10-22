@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LojaDeJogos.Views.JogoPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="New Item"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true">
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Label Text="Descrição" FontSize="Medium" />
+            <Entry Text="{Binding Descricao, Mode=TwoWay}" FontSize="Medium" />
+            <Label Text="Valor" FontSize="Medium" />
+            <Editor Text="{Binding Valor, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Estoque:" FontSize="Medium" />
+            <Editor Text="{Binding Estoque, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Genero:" FontSize="Medium" />
+            <Editor Text="{Binding Genero, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Classificação:" FontSize="Medium" />
+            <Editor Text="{Binding Classificacao, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Tags:" FontSize="Medium" />
+            <Editor Text="{Binding Tags, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancelar" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button IsVisible="{Binding MostrarBotaoDeletar, Mode=OneWay}" Text="Deletar" Command="{Binding DeleteCommand}" BackgroundColor="Red"  HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Salvar" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

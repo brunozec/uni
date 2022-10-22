@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LojaDeJogos.Views.JogoDetailPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Editar" Command="{Binding EditJogoCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Spacing="20" Padding="15">
+        <Label Text="Código identificador:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Id}" FontSize="Small"
+               TextColor="Black"/>
+        <Label Text="Descrição:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Descricao}" FontSize="Small"
+               TextColor="Black"/>
+        <Label Text="Valor:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Valor}" FontSize="Small"
+               TextColor="Black"/>
+        <Label Text="Estoque:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Estoque}" FontSize="Small"
+               TextColor="Black"/>
+        <Label Text="Genero:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Genero}" FontSize="Small"
+               TextColor="Black"/>
+        <Label Text="Classificação:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Classificacao}" FontSize="Small"
+               TextColor="Black"/>
+        <Label Text="Tags:" FontSize="Medium" 
+               TextColor="Black"/>
+        <Label Text="{Binding Tags}" FontSize="Small"
+               TextColor="Black"/>
+    </StackLayout>
+    
+</ContentPage>
