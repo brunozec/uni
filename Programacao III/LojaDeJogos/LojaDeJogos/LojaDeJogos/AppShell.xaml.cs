@@ -1,7 +1,7 @@
 ﻿using System;
+using LojaDeJogos.Views;
 using LojaDeJogos.Views.Jogos;
 using Xamarin.Forms;
-using LojaDeJogos.Views.Vendas;
 
 namespace LojaDeJogos
 {
@@ -13,8 +13,8 @@ namespace LojaDeJogos
 
             Routing.RegisterRoute(nameof(JogoDetailPage), typeof(JogoDetailPage));
             Routing.RegisterRoute(nameof(JogoPage), typeof(JogoPage));
-            Routing.RegisterRoute(nameof(VendaPage), typeof(VendaPage));
-            Routing.RegisterRoute(nameof(VendaDetailPage), typeof(VendaDetailPage));
+            Routing.RegisterRoute(nameof(PesquisarPage), typeof(PesquisarPage));
+            Routing.RegisterRoute(nameof(GPSPage), typeof(GPSPage));
         }
     }
 }

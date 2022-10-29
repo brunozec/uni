@@ -32,7 +32,7 @@ namespace LojaDeJogos.Droid
         async void SimulateStartup()
         {
             //adiciona um delay apenas para que fique visivel por mais tempo a tela de inicio
-            //await Task.Delay(12000);
+            await Task.Delay(1000);
             
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }

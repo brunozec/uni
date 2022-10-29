@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LojaDeJogos.Views.PesquisarPage"
+             xmlns:vm="clr-namespace:LojaDeJogos.ViewModels"
+             Title="{Binding Title}">
+
+    <StackLayout Spacing="3" Padding="15">
+        <Label Text="Pesquisa:" FontSize="Medium"
+               TextColor="Black" />
+        <Entry Text="{Binding TextoPesquisa, Mode=TwoWay}" FontSize="Medium" />
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Pesquisar" Command="{Binding PesquisarCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
+
+        <Label Text="Nome:" FontSize="Medium"
+               TextColor="Black" />
+        <Label Text="{Binding Name}" FontSize="Medium"
+               TextColor="Black" Margin="0" />
+        <Label Text="Ano de publicação:" FontSize="Medium"
+               TextColor="Black" />
+        <Label Text="{Binding YearPublished}" FontSize="Medium"
+               TextColor="Black" Margin="0" />
+
+        <Image Source="{Binding ImageUrl}">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding TapCommand}"
+                                      CommandParameter="{Binding Url}" />
+            </Image.GestureRecognizers>
+        </Image>
+    </StackLayout>
+
+</ContentPage>

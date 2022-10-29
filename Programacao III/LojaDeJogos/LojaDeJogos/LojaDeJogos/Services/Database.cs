@@ -8,7 +8,6 @@ namespace LojaDeJogos.Services
         public static void CreateDatabase(SQLiteAsyncConnection connection)
         {
             connection.CreateTableAsync<Jogo>().Wait();
-            connection.CreateTableAsync<Venda>().Wait();
         }
     }
 }

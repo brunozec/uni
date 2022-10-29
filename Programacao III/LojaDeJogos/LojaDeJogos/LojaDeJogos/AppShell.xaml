@@ -3,7 +3,6 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:LojaDeJogos.Views"
        xmlns:jogos="clr-namespace:LojaDeJogos.Views.Jogos;assembly=LojaDeJogos"
-       xmlns:vendas="clr-namespace:LojaDeJogos.Views.Vendas;assembly=LojaDeJogos"
        Title="LojaDeJogos"
        x:Class="LojaDeJogos.AppShell">
 
@@ -86,8 +85,8 @@
     <FlyoutItem Title="Jogos" Icon="icon_feed.png">
         <ShellContent Route="JogosListaPage" ContentTemplate="{DataTemplate jogos:JogosListaPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Vendas" Icon="icon_feed.png">
-        <ShellContent Route="VendasListaPage" ContentTemplate="{DataTemplate vendas:VendasListaPage}" />
+    <FlyoutItem Title="Pesquisar jogos" Icon="icon_feed.png">
+        <ShellContent Route="PesquisarPage" ContentTemplate="{DataTemplate local:PesquisarPage}" />
     </FlyoutItem>
 
 
