@@ -3,7 +3,6 @@ using LojaDeJogos.Views;
 using System;
 using System.IO;
 using LojaDeJogos.Repositories;
-using LojaDeVendas.Repositories;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

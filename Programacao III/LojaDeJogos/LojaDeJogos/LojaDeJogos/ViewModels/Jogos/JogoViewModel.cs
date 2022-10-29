@@ -1,14 +1,10 @@
 ﻿using LojaDeJogos.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using LojaDeJogos.Repositories;
 using Xamarin.Forms;
 using System.Diagnostics;
-using LojaDeJogos.Views;
 
-namespace LojaDeJogos.ViewModels
+namespace LojaDeJogos.ViewModels.Jogos
 {
     [QueryProperty(nameof(JogoId), nameof(JogoId))]
     public class JogoViewModel : BaseViewModel
@@ -34,16 +30,16 @@ namespace LojaDeJogos.ViewModels
 
             DeleteCommand = new Command(OnDelete);
 
-            this.PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
+            PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
         }
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(_descricao)
+            return !string.IsNullOrWhiteSpace(_descricao)
              && _valor > 0
-             && !String.IsNullOrWhiteSpace(_genero)
-             && !String.IsNullOrWhiteSpace(_classificacao)
-             && !String.IsNullOrWhiteSpace(_tags);
+             && !string.IsNullOrWhiteSpace(_genero)
+             && !string.IsNullOrWhiteSpace(_classificacao)
+             && !string.IsNullOrWhiteSpace(_tags);
         }
 
         public int JogoId

@@ -1,12 +1,8 @@
 ﻿using LojaDeJogos.Models;
-using LojaDeJogos.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using LojaDeJogos.ViewModels.Jogos;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-namespace LojaDeJogos.Views
+namespace LojaDeJogos.Views.Jogos
 {
     public partial class JogoPage : ContentPage
     {

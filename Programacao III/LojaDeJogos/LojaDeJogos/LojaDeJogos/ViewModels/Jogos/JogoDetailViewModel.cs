@@ -1,12 +1,10 @@
-﻿using LojaDeJogos.Models;
-using LojaDeJogos.Repositories;
-using LojaDeJogos.Views;
+﻿using LojaDeJogos.Repositories;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using LojaDeJogos.Views.Jogos;
 using Xamarin.Forms;
 
-namespace LojaDeJogos.ViewModels
+namespace LojaDeJogos.ViewModels.Jogos
 {
     [QueryProperty(nameof(JogoId), nameof(JogoId))]
     public class JogoDetailViewModel : BaseViewModel
@@ -83,7 +81,7 @@ namespace LojaDeJogos.ViewModels
             //inicializa o comando para a ação de editar jogo
             EditJogoCommand = new Command(OnEditJogo);
         }
-        
+
         private async void OnEditJogo(object item)
         {
             if (Id == null)

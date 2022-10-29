@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using LojaDeJogos.Models;
 
-namespace LojaDeVendas.Repositories
+namespace LojaDeJogos.Repositories
 {
     /// <summary>
     /// Interface que representa o repositorio de vendas

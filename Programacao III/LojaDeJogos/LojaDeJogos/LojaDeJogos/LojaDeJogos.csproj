@@ -12,13 +12,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\JogosListaPage.xaml.cs">
+    <Compile Update="Views\GPSPage.xaml.cs">
+      <DependentUpon>GPSPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Vendas\VendaDetailPage.xaml.cs">
+      <DependentUpon>VendaDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Vendas\VendaPage.xaml.cs">
+      <DependentUpon>VendaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Vendas\VendasListaPage.xaml.cs">
+      <DependentUpon>VendasListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Jogos\JogosListaPage.xaml.cs">
       <DependentUpon>JogosListaPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\JogoDetailPage.xaml.cs">
+    <Compile Update="Views\Jogos\JogoDetailPage.xaml.cs">
       <DependentUpon>JogoDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\JogoPage.xaml.cs">
+    <Compile Update="Views\Jogos\JogoPage.xaml.cs">
       <DependentUpon>JogoPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>

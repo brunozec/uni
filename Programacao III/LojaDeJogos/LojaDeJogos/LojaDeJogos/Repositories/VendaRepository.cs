@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LojaDeJogos.Models;
-using LojaDeJogos.Repositories;
 using LojaDeJogos.Services;
 using SQLite;
 using Xamarin.Forms;
 
-namespace LojaDeVendas.Repositories
+namespace LojaDeJogos.Repositories
 {
     public class VendaRepository : IVendaRepository
     {

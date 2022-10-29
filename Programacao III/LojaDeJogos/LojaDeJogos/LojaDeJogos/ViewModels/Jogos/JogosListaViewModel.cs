@@ -1,13 +1,13 @@
 ﻿using LojaDeJogos.Models;
-using LojaDeJogos.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using LojaDeJogos.Repositories;
+using LojaDeJogos.Views.Jogos;
 using Xamarin.Forms;
 
-namespace LojaDeJogos.ViewModels
+namespace LojaDeJogos.ViewModels.Jogos
 {
     public class JogosListaViewModel : BaseViewModel
     {
@@ -24,10 +24,10 @@ namespace LojaDeJogos.ViewModels
             //resolve a dependencia pela interface do repositorio
             _jogoRepository = DependencyService.Resolve<IJogoRepository>();
             Title = "Jogos";
-            
+
             //Inicializa a lista de jogos
             Jogos = new ObservableCollection<Jogo>();
-            
+
             //Inicializa o commando para carregamento dos jogos
             LoadJogosCommand = new Command(async () => await ExecuteLoadJogosCommand());
 
@@ -82,7 +82,7 @@ namespace LojaDeJogos.ViewModels
             //navega até a pagina para adicionar um novo jogo
             await Shell.Current.GoToAsync(nameof(JogoPage));
         }
-        
+
         async void OnJogoSelected(Jogo item)
         {
             if (item == null)

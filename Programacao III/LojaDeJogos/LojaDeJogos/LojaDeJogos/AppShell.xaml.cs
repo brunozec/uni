@@ -1,8 +1,7 @@
-﻿using LojaDeJogos.ViewModels;
-using LojaDeJogos.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using LojaDeJogos.Views.Jogos;
 using Xamarin.Forms;
+using LojaDeJogos.Views.Vendas;
 
 namespace LojaDeJogos
 {
@@ -14,11 +13,8 @@ namespace LojaDeJogos
 
             Routing.RegisterRoute(nameof(JogoDetailPage), typeof(JogoDetailPage));
             Routing.RegisterRoute(nameof(JogoPage), typeof(JogoPage));
-        }
-
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//LoginPage");
+            Routing.RegisterRoute(nameof(VendaPage), typeof(VendaPage));
+            Routing.RegisterRoute(nameof(VendaDetailPage), typeof(VendaDetailPage));
         }
     }
 }

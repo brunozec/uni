@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LojaDeJogos.Views.Vendas.VendasListaPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:LojaDeJogos.ViewModels.Vendas"  
+             xmlns:model="clr-namespace:LojaDeJogos.Models"  
+             x:Name="BrowseVendasPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Novo" Command="{Binding AddVendaCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="local:VendasListaViewModel" Command="{Binding LoadVendasCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Vendas}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Venda">
+                        <Label Text="{Binding Id}" 
+                               LineBreakMode="NoWrap" 
+                               TextColor="Black"
+                               FontSize="16" />
+                        <Label Text="{Binding NomeCliente}" 
+                               LineBreakMode="NoWrap" 
+                               TextColor="Black"
+                               FontSize="16" />
+                        <Label Text="{Binding ClienteCpfCnpj}" 
+                               LineBreakMode="NoWrap" 
+                               TextColor="Black"
+                               FontSize="16" />
+                        <Label Text="{Binding ValorTotal}" 
+                            LineBreakMode="NoWrap" 
+                            TextColor="Black"
+                            FontSize="13" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:VendasListaViewModel}}, Path=VendaTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
