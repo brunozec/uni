@@ -27,7 +27,7 @@ public class AlunoRepository : IAlunoRepository
         //instancia o contexto do banco de dados
         await using var db = new AtividadePraticaContext();
 
-        var alunoDb = db.Alunos.FirstOrDefault(f => f.RU == aluno.RU);
+        var alunoDb = await GetByRUAsync((int)aluno.RU);
 
         if (alunoDb == null)
         {
@@ -38,6 +38,8 @@ public class AlunoRepository : IAlunoRepository
         alunoDb.Curso = aluno.Curso;
         alunoDb.Nome = aluno.Nome;
 
+        db.Update(alunoDb);
+        
         //salva as alterações no datase
         await db.SaveChangesAsync();
 
@@ -52,11 +54,6 @@ public class AlunoRepository : IAlunoRepository
         
         //carrega o aluno referente ao ru informado
         var alunoDb = db.Alunos.FirstOrDefault(f => f.RU == ru);
-
-        if (alunoDb == null)
-        {
-            throw new Exception("Registro não encontrado");
-        }
 
         return alunoDb;
     }
