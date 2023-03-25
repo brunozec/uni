@@ -6,9 +6,10 @@ namespace AtividadePratica.Domain;
 [Table("alunos")]
 public class Aluno
 {
-    //chave primaria para a tabela de alunos
+    /// <summary>
+    /// Código identificador, chave primária
+    /// </summary>
     [Key]
-    //indica que o campo é obrigatório
     public int? Id { get; set; }
     
     /// <summary>

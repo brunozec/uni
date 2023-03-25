@@ -20,9 +20,41 @@ builder.Services.AddSwaggerGen(options =>
     // adiciona a configuração da documentação dos metodos e classes para exibição no swagger
     var apiXml = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, apiXml));
-    
+
     var domainXml = $"AtividadePratica.Domain.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, domainXml));
+
+    //adiciona configuração para autentica basica (usuario + senha) pela pagina do swagger
+    options.SwaggerDoc("v1"
+        , new OpenApiInfo
+        {
+            Title = "BasicAuth"
+            , Version = "v1"
+        });
+    options.AddSecurityDefinition("basic"
+        , new OpenApiSecurityScheme
+        {
+            Name = "Authorization"
+            , Type = SecuritySchemeType.Http
+            , Scheme = "basic"
+            , In = ParameterLocation.Header
+            , Description = "Autorização básica utilizando usuário + senha"
+        });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme
+                    , Id = "basic"
+                }
+            }
+            , new string[]
+                { }
+        }
+    });
 });
 
 // politica CORS com metodo de extensso - RequireCors

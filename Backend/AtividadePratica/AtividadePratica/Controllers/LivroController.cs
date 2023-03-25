@@ -169,23 +169,17 @@ public class LivroController : ControllerBase
     }
 
     /// <summary>
-    /// Carrega um livro por curso
+    /// Carrega todos os livros
     /// </summary>
-    /// <param name="curso">Nome do curso</param>
     /// <returns>List de objeto de livros</returns>
     [HttpGet]
     [Route("get_all")]
-    public async Task<ActionResult> GetByAllAsync(
-        string? curso)
+    public async Task<ActionResult> GetByAllAsync()
     {
         try
         {
-            //verifica se está foi enviado o valor do curso
-            if (string.IsNullOrEmpty(curso))
-                return new BadRequestObjectResult("Informe o nome do curso");
-
             //chama o repositorio para carregar os livros por curso
-            var livros = await _livroRepository.GetAllAsync(curso);
+            var livros = await _livroRepository.GetAllAsync();
 
             //retorna 200 com sucesso
             return new OkObjectResult(livros);

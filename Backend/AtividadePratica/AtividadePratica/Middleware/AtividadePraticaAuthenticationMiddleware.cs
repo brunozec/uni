@@ -42,6 +42,7 @@ public class AtividadePraticaAuthenticationMiddleware : IMiddleware
             //se aconteceu algum erro, retorna não autorizado
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             await context.Response.WriteAsync("Usuário e/ou senha incorretos!");
+            return;
         }
 
         await next(context);
