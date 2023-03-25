@@ -18,6 +18,7 @@ public class AlunoRepository : IAlunoRepository
         //salva as alterações no datase
         await db.SaveChangesAsync();
 
+        //retorna o aluno
         return aluno;
     }
 
@@ -38,11 +39,13 @@ public class AlunoRepository : IAlunoRepository
         alunoDb.Curso = aluno.Curso;
         alunoDb.Nome = aluno.Nome;
 
+        //atualiza o aluno no dataset
         db.Update(alunoDb);
-        
+
         //salva as alterações no datase
         await db.SaveChangesAsync();
 
+        //retorna o aluno
         return aluno;
     }
 
@@ -51,10 +54,11 @@ public class AlunoRepository : IAlunoRepository
     {
         //instancia o contexto do banco de dados
         await using var db = new AtividadePraticaContext();
-        
+
         //carrega o aluno referente ao ru informado
         var alunoDb = db.Alunos.FirstOrDefault(f => f.RU == ru);
 
+        //retorna o aluno encontrado por ru
         return alunoDb;
     }
 
@@ -67,11 +71,13 @@ public class AlunoRepository : IAlunoRepository
         //carrega o aluno referente ao ru informado
         var alunoDb = db.Alunos.FirstOrDefault(f => f.RU == ru);
 
+        //aluno nao encontrado
         if (alunoDb == null)
         {
             throw new Exception("Registro não encontrado");
         }
 
+        //remove o aluno do dataset
         db.Alunos.Remove(alunoDb);
 
         //salva as alterações no datase
@@ -81,8 +87,10 @@ public class AlunoRepository : IAlunoRepository
     public async Task<IList<Aluno>> GetByCursoAsync(
         string curso)
     {
+        //instancia o contexto do banco de dados
         await using var db = new AtividadePraticaContext();
 
-        return db.Alunos.ToList();
+        //retorna lista de aluno com o curso informado
+        return db.Alunos.Where(where => where.Curso.Equals(curso, StringComparison.InvariantCultureIgnoreCase)).ToList();
     }
 }

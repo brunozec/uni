@@ -11,9 +11,9 @@ public class Livro
 
     //indica que o campo é obrigatório
     [Required(ErrorMessage = "Nome é obrigatório")]
-    public string? Nome { get; set; }
+    public string Nome { get; set; }
 
     //indica que o campo é obrigatório
     [Required(ErrorMessage = "Url é obrigatório")]
-    public string? Url { get; set; }
+    public string Url { get; set; }
 }

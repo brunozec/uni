@@ -12,7 +12,6 @@ public class AtividadePraticaAuthenticationMiddleware : IMiddleware
         HttpContext context
         , RequestDelegate next)
     {
-        var endpoint = context.GetEndpoint();
         var senha = "3672320";
         var usuario = "zeclhynscki";
         try
@@ -22,12 +21,13 @@ public class AtividadePraticaAuthenticationMiddleware : IMiddleware
             
             var credentialBytes = Convert.FromBase64String(authenticationHeader.Parameter);
             
+            // carrega um array, separando os itens por :
             var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
             
             var username = credentials[0];
             var password = credentials[1];
 
-            // authenticate credentials with user service and attach user to http context
+            // verifica se os valores estão corretos
             if (!username.Equals(usuario)
                 || !senha.Equals(password))
             {
@@ -39,8 +39,9 @@ public class AtividadePraticaAuthenticationMiddleware : IMiddleware
         }
         catch
         {
-            // do nothing if invalid auth header
-            // user is not attached to context so request won't have access to secure routes
+            //se aconteceu algum erro, retorna não autorizado
+            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            await context.Response.WriteAsync("Usuário e/ou senha incorretos!");
         }
 
         await next(context);

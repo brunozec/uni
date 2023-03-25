@@ -16,19 +16,19 @@ public class Aluno
     /// </summary>
     //indica que o campo é obrigatório
     [Required(ErrorMessage = "RU é obrigatório")]
-    public int? RU { get; set; }
+    public int RU { get; set; }
 
     /// <summary>
     /// Nome do aluno
     /// </summary>
     //indica que o campo é obrigatório
     [Required(ErrorMessage = "Nome é obrigatório")]
-    public string? Nome { get; set; }
+    public string Nome { get; set; }
 
     /// <summary>
     /// Curso do aluno
     /// </summary>
     //indica que o campo é obrigatório
     [Required(ErrorMessage = "Curso é obrigatório")]
-    public string? Curso { get; set; }
+    public string Curso { get; set; }
 }
