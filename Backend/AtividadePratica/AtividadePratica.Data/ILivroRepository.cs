@@ -41,4 +41,11 @@ public interface ILivroRepository
     /// </summary>
     /// <returns>Lista de livros</returns>
     Task<IList<Livro>> GetAllAsync();
+
+    /// <summary>
+    /// Carrega o objeto livro
+    /// </summary>
+    /// <param name="id">Id do livro</param>
+    /// <returns></returns>
+    Task<Livro> GetByIsbnAsync(string isbn);
 }

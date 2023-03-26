@@ -91,6 +91,6 @@ public class AlunoRepository : IAlunoRepository
         await using var db = new AtividadePraticaContext();
 
         //retorna lista de aluno com o curso informado
-        return db.Alunos.Where(where => where.Curso.Equals(curso, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        return db.Alunos.Where(where => where.Curso.ToLower() == curso.ToLower()).ToList();
     }
 }

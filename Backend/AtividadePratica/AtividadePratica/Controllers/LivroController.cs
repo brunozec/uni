@@ -36,13 +36,13 @@ public class LivroController : ControllerBase
             if (livro == null)
                 return new BadRequestObjectResult("Informe os dados do livro");
 
-            //verifica se já existe um livro com o id cadastrado
-            var livroComId = await _livroRepository.GetByIdAsync((int)livro.Id);
+            //verifica se já existe um livro com o isbn cadastrado
+            var livroComId = await _livroRepository.GetByIsbnAsync(livro.ISBN);
 
-            //caso exista um livro com id cadastrado, retorna mensagem de ja cadastrado
+            //caso exista um livro com isbn cadastrado, retorna mensagem de ja cadastrado
             if (livroComId != null)
             {
-                return new BadRequestObjectResult($"Livro com Id {livro.Id} já cadastrado!");
+                return new BadRequestObjectResult($"Livro com Id {livro.ISBN} já cadastrado!");
             }
 
             //chama o repositorio para salvar o livro
@@ -74,13 +74,13 @@ public class LivroController : ControllerBase
             if (livro == null)
                 return new BadRequestObjectResult("Informe os dados do livro");
 
-            //verifica se já existe um livro com o id cadastrado
-            var livroComId = await _livroRepository.GetByIdAsync((int)livro.Id);
+            //verifica se já existe um livro com o isbn cadastrado
+            var livroComId = await _livroRepository.GetByIsbnAsync(livro.ISBN);
 
             //caso não exista um livro com id cadastrado, retorna mensagem de não encontrado
             if (livroComId == null)
             {
-                return new NotFoundObjectResult($"Livro com Id {livro.Id} não encontrado!");
+                return new NotFoundObjectResult($"Livro com ISBN {livro.ISBN} não encontrado!");
             }
 
             //chama o repositorio para atualizar o livro
@@ -119,6 +119,41 @@ public class LivroController : ControllerBase
             if (livro == null)
             {
                 return new NotFoundObjectResult($"Livro com Id {id} não encontrado!");
+            }
+
+            //retorna 200 com sucesso
+            return new OkObjectResult(livro);
+        }
+        catch (Exception e)
+        {
+            //retorna mensagem de erro
+            return new BadRequestObjectResult(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// Carrega um livro por ISBN
+    /// </summary>
+    /// <param name="id">Numero ISBN</param>
+    /// <returns>Objeto do livro</returns>
+    [HttpGet]
+    [Route("get_by_isbn")]
+    public async Task<ActionResult> GetByIsbnAsync(
+        string? isbn)
+    {
+        try
+        {
+            //verifica se está foi enviado o valor do ISBN
+            if (string.IsNullOrEmpty(isbn))
+                return new BadRequestObjectResult("Informe o ISBN");
+
+            //verifica se existe um livro com o id cadastrado
+            var livro = await _livroRepository.GetByIsbnAsync(isbn);
+
+            //caso não exista um livro com isbn cadastrado, retorna mensagem de não encontrado
+            if (livro == null)
+            {
+                return new NotFoundObjectResult($"Livro com ISBN {isbn} não encontrado!");
             }
 
             //retorna 200 com sucesso

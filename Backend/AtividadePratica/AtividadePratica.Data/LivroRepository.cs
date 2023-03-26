@@ -6,6 +6,7 @@ public class LivroRepository : ILivroRepository
 {
     public LivroRepository()
     {
+        //adiciona os 3 livros iniciais
         AddLivrosIniciais().ConfigureAwait(false).GetAwaiter().GetResult();
     }
     
@@ -31,7 +32,7 @@ public class LivroRepository : ILivroRepository
         //instancia o contexto do banco de dados
         await using var db = new AtividadePraticaContext();
 
-        var livroDb = await GetByIdAsync((int)livro.Id);
+        var livroDb = await GetByIsbnAsync(livro.ISBN);
 
         if (livroDb == null)
         {
@@ -96,6 +97,19 @@ public class LivroRepository : ILivroRepository
 
         //retorna lista de livro com o curso informado
         return db.Livros.ToList();
+    }
+
+    public async Task<Livro> GetByIsbnAsync(
+        string isbn)
+    {
+        //instancia o contexto do banco de dados
+        await using var db = new AtividadePraticaContext();
+
+        //carrega o livro referente ao isbn informado
+        var livroDb = db.Livros.FirstOrDefault(f => f.ISBN.ToLower() == isbn.ToLower());
+
+        //retorna o livro encontrado por isbn
+        return livroDb;
     }
 
     public async Task AddLivrosIniciais()

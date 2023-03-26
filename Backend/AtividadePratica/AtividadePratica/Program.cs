@@ -1,7 +1,6 @@
 using System.Reflection;
 using AtividadePratica.Data;
 using AtividadePratica.Middleware;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 //nome da politica
