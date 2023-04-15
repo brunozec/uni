@@ -1,4 +1,5 @@
-﻿using BFZ.AtividadeExtensionistaII.Repositories;
+﻿using BFZ.AtividadeExtensionistaII.Common.Stores;
+using BFZ.AtividadeExtensionistaII.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BFZ.AtividadeExtensionistaII.IoC;
@@ -7,8 +8,8 @@ public static class Configuration
 {
     public static void AddDepedencyInjection(this IServiceCollection service)
     {
+       service.AddSingleton<AuthStore>();
        
-        service.AddSingleton<RepositoryBase>();
-
+       service.AddSingleton<RepositoryBase>();
     }
 }

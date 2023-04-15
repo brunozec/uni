@@ -1,8 +1,12 @@
-﻿namespace BFZ.AtividadeExtensionistaII.Domain.Models;
+﻿using BFZ.AtividadeExtensionistaII.Domain.Abstractions;
+using SQLite;
 
-public class UnidadeDeNegocio
+namespace BFZ.AtividadeExtensionistaII.Domain.Models;
+
+[Table("unidades_de_negocio")]
+public class UnidadeDeNegocio : IEntityId
 {
-    public Guid Id { get; set; }
+    [PrimaryKey] public int? Id { get; set; }
 
     public string Nome { get; set; }
 

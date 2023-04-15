@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Common\BFZ.AtividadeExtensionistaII.Common.csproj" />
     <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Repositories\BFZ.AtividadeExtensionistaII.Repositories.csproj" />
   </ItemGroup>
 
