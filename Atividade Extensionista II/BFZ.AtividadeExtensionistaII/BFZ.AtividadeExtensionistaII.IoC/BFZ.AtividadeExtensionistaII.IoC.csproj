@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Common\BFZ.AtividadeExtensionistaII.Common.csproj" />
     <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Repositories\BFZ.AtividadeExtensionistaII.Repositories.csproj" />
+    <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Viewmodels\BFZ.AtividadeExtensionistaII.Viewmodels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,81 @@
+﻿@page "/login"
+
+
+<PageTitle>Entrar</PageTitle>
+
+@if (LoginViewModel.IsBusy)
+{
+    <SfSpinner
+        @bind-Visible="@LoginViewModel.IsBusy"
+        Label="Carregando, aguarde..."
+        Size="40" >
+    </SfSpinner>
+}
+else
+{
+    <div
+        class="justify-content-center align-items-center h-100 w-100" >
+        <div
+            class="login-container" >
+            
+            <h4> Novo por aqui? <a href="/register" style="color: #0a53be">Clique aqui</a> para se cadastrar! </h4>
+
+            <div
+                class="login-form" >
+                <EditForm
+                    Model="@LoginViewModel.AutenticationRequest"
+                    OnValidSubmit="HandleValidSubmit" >
+                    <DataAnnotationsValidator/>
+                    <div
+                        class="form-group" >
+                        <SfTextBox
+                            Enabled="@(!LoginViewModel.IsBusy)"
+                            FloatLabelType="FloatLabelType.Auto"
+                            Placeholder="Email"
+                            Type="InputType.Email"
+                            @bind-Value="@LoginViewModel.AutenticationRequest.Login" >
+                        </SfTextBox>
+
+                        <ValidationMessage
+                            For="@(() => LoginViewModel.AutenticationRequest.Login)"/>
+
+                        <SfTextBox
+                            Enabled="@(!LoginViewModel.IsBusy)"
+                            FloatLabelType="FloatLabelType.Auto"
+                            Placeholder="Senha"
+                            Type="InputType.Password"
+                            @bind-Value="@LoginViewModel.AutenticationRequest.Senha" >
+                        </SfTextBox>
+
+                        <ValidationMessage
+                            For="@(() => LoginViewModel.AutenticationRequest.Senha)"/>
+
+                    </div>
+                    <div
+                        class="d-flex" style="padding-top: 10px" >
+                        <SfProgressButton
+                            Content="Entrar"
+                            IsPrimary="true"
+                            EnableProgress="@LoginViewModel.IsBusy">
+                            <ProgressButtonSpinSettings
+                                Position="SpinPosition.Right" >
+                            </ProgressButtonSpinSettings>
+                        </SfProgressButton>
+
+                    </div>
+                    <div
+                        class="" >
+                        @if (!string.IsNullOrEmpty(Error))
+                        {
+                            <div
+                                class="alert alert-danger mt-3 mb-0" >
+                                @Error
+                            </div>
+                        }
+                    </div>
+                </EditForm>
+            </div>
+
+        </div>
+    </div>
+}

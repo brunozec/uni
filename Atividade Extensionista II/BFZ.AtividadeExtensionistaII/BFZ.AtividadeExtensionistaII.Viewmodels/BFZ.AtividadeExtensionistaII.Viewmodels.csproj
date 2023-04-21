@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Domain\BFZ.AtividadeExtensionistaII.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
