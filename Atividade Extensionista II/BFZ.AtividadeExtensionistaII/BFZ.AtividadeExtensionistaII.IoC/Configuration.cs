@@ -1,6 +1,7 @@
 ﻿using BFZ.AtividadeExtensionistaII.Common;
 using BFZ.AtividadeExtensionistaII.Common.Stores;
 using BFZ.AtividadeExtensionistaII.Repositories;
+using BFZ.AtividadeExtensionistaII.Viewmodels;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
 using Microsoft.Extensions.DependencyInjection;
 using Syncfusion.Blazor;
@@ -23,7 +24,8 @@ public static class Configuration
 
         #region viewmodels
 
-        service.AddSingleton<LoginViewModel>();
+        service.AddSingleton<AuthenticationViewModel>();
+        service.AddSingleton<UnidadeDeNegocioViewModel>();
 
         #endregion
 

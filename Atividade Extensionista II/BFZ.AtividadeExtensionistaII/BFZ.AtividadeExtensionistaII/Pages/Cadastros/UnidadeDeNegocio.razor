@@ -1,0 +1,114 @@
+﻿@page "/UnidadeDeNegocio"
+@using BFZ.AtividadeExtensionistaII.Domain.Models
+@using LabelPosition = Syncfusion.Blazor.Buttons.LabelPosition
+
+<PageTitle>Registrar</PageTitle>
+
+<h4>Cadastro de unidade de negócio</h4>
+
+<EditForm
+    Model="UnidadeDeNegocioViewModel.CurrentItem"
+    OnValidSubmit="OnValidSubmit"
+    OnInvalidSubmit="OnInvalidSubmit"
+    style="height: 100%" >
+    <div
+        class="d-flex flex-column justify-content-between"
+        style="height: 100%" >
+        <DataAnnotationsValidator/>
+
+        @if (UnidadeDeNegocioViewModel.CurrentItem.Id != null)
+        {
+            <SfNumericTextBox
+                TValue="int?"
+                @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Id"
+                FloatLabelType="FloatLabelType.Auto"
+                Placeholder="Código"/>
+            <ValidationMessage
+                For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Id)" >
+            </ValidationMessage>
+        }
+
+        <SfTextBox
+            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Nome"
+            Type="InputType.Text"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="Nome"/>
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Nome)" >
+        </ValidationMessage>
+
+        <SfTextBox
+            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Email"
+            Type="InputType.Email"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="Email"/>
+
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Email)" >
+        </ValidationMessage>
+
+        <SfMaskedTextBox
+            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Fone"
+            Mask="(00) 00000-0000"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="Fone"/>
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Fone)" >
+        </ValidationMessage>
+
+        <SfMaskedTextBox
+            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.EnderecoCep"
+            Mask="00.000-000"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="CEP"/>
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.EnderecoCep)" >
+        </ValidationMessage>
+
+        <SfTextBox
+            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.EnderecoNumero"
+            Type="InputType.Text"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="Número"/>
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.EnderecoNumero)" >
+        </ValidationMessage>
+
+        @if ((TipoUnidadeDeNegocio)Tipo == TipoUnidadeDeNegocio.EntidadeCaridade
+             && UnidadeDeNegocioViewModel.CurrentItem.Id == null)
+        {
+            <div
+                class="pt-3 pb-3 ml-3" >
+                <SfCheckBox
+                    TChecked="bool"
+                    @bind-Checked="@CheckBoxConfirmEntidadeCaridade"
+                    LabelPosition="LabelPosition.After"
+                    Label="Confirmo que represento uma entidade de caridade"/>
+            </div>
+        }
+        @if (_displayValidationErrorMessages)
+        {
+            <div
+                class="col-md-4"
+                style="margin-top:10px" >
+                <label>Validation Messages: </label>
+                <ValidationSummary/>
+            </div>
+        }
+        <div
+            class="d-flex sideBarFooter"
+            style="padding-top: 10px; width: 100%" >
+
+            <SfProgressButton
+                Content="Salvar"
+                IsPrimary="true"
+                CssClass="mp-button"
+                EnableProgress="@UnidadeDeNegocioViewModel.IsBusy" >
+                <ProgressButtonSpinSettings
+                    Position="SpinPosition.Right" >
+                </ProgressButtonSpinSettings>
+            </SfProgressButton>
+
+        </div>
+    </div>
+</EditForm>

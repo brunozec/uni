@@ -1,14 +1,12 @@
 ﻿using BFZ.AtividadeExtensionistaII.Common.Stores;
+using BFZ.AtividadeExtensionistaII.Domain.Models;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace BFZ.AtividadeExtensionistaII.Pages.Auth;
 
-public partial class Login
+public partial class Register
 {
-    private bool _displayValidationErrorMessages;
-
     [Inject] private AuthenticationViewModel AuthenticationViewModel { get; set; }
 
     [Inject] private AuthStore AuthStore { get; set; }
@@ -17,18 +15,10 @@ public partial class Login
 
     private string Error { get; set; }
 
-    private Task HandleValidSubmit(
-        EditContext arg)
+    private Task OnClick(
+        TipoUnidadeDeNegocio tipo)
     {
-        _displayValidationErrorMessages = false;
-        
-        return Task.CompletedTask;
-    }
-
-    private Task OnInvalidSubmit(
-        EditContext arg)
-    {
-        _displayValidationErrorMessages = true;
+        NavigationManager.NavigateTo($"/UnidadeDeNegocio?tipo={(int)tipo}");
 
         return Task.CompletedTask;
     }

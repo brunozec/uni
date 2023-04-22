@@ -3,10 +3,10 @@
 
 <PageTitle>Entrar</PageTitle>
 
-@if (LoginViewModel.IsBusy)
+@if (AuthenticationViewModel.IsBusy)
 {
     <SfSpinner
-        @bind-Visible="@LoginViewModel.IsBusy"
+        @bind-Visible="@AuthenticationViewModel.IsBusy"
         Label="Carregando, aguarde..."
         Size="40" >
     </SfSpinner>
@@ -17,61 +17,74 @@ else
         class="justify-content-center align-items-center h-100 w-100" >
         <div
             class="login-container" >
-            
-            <h4> Novo por aqui? <a href="/register" style="color: #0a53be">Clique aqui</a> para se cadastrar! </h4>
+
+            <h6>
+                Novo por aqui?
+                <a
+                    href="/register"
+                    style="color: #0a53be" >
+                    Clique aqui
+                </a> para se cadastrar!
+            </h6>
+
 
             <div
                 class="login-form" >
                 <EditForm
-                    Model="@LoginViewModel.AutenticationRequest"
-                    OnValidSubmit="HandleValidSubmit" >
+                    Model="@AuthenticationViewModel.AutenticationRequest"
+                    OnValidSubmit="HandleValidSubmit"
+                    OnInvalidSubmit="OnInvalidSubmit" >
                     <DataAnnotationsValidator/>
                     <div
                         class="form-group" >
                         <SfTextBox
-                            Enabled="@(!LoginViewModel.IsBusy)"
+                            Enabled="@(!AuthenticationViewModel.IsBusy)"
                             FloatLabelType="FloatLabelType.Auto"
                             Placeholder="Email"
                             Type="InputType.Email"
-                            @bind-Value="@LoginViewModel.AutenticationRequest.Login" >
+                            @bind-Value="@AuthenticationViewModel.AutenticationRequest.Login" >
                         </SfTextBox>
 
                         <ValidationMessage
-                            For="@(() => LoginViewModel.AutenticationRequest.Login)"/>
+                            For="@(() => AuthenticationViewModel.AutenticationRequest.Login)"/>
 
                         <SfTextBox
-                            Enabled="@(!LoginViewModel.IsBusy)"
+                            Enabled="@(!AuthenticationViewModel.IsBusy)"
                             FloatLabelType="FloatLabelType.Auto"
                             Placeholder="Senha"
                             Type="InputType.Password"
-                            @bind-Value="@LoginViewModel.AutenticationRequest.Senha" >
+                            @bind-Value="@AuthenticationViewModel.AutenticationRequest.Senha" >
                         </SfTextBox>
 
                         <ValidationMessage
-                            For="@(() => LoginViewModel.AutenticationRequest.Senha)"/>
+                            For="@(() => AuthenticationViewModel.AutenticationRequest.Senha)"/>
 
                     </div>
+                    
+                    
+        @if (_displayValidationErrorMessages)
+        {
+            <div
+                class="col-md-4"
+                style="margin-top:10px" >
+                <label>Validation Messages: </label>
+                <ValidationSummary/>
+            </div>
+        }
+                    
                     <div
-                        class="d-flex" style="padding-top: 10px" >
+                        class="d-flex"
+                        style="padding-top: 10px; width: 100%" >
                         <SfProgressButton
                             Content="Entrar"
                             IsPrimary="true"
-                            EnableProgress="@LoginViewModel.IsBusy">
+                            CssClass="mp-button"
+                            EnableProgress="@AuthenticationViewModel.IsBusy" >
                             <ProgressButtonSpinSettings
                                 Position="SpinPosition.Right" >
                             </ProgressButtonSpinSettings>
                         </SfProgressButton>
 
-                    </div>
-                    <div
-                        class="" >
-                        @if (!string.IsNullOrEmpty(Error))
-                        {
-                            <div
-                                class="alert alert-danger mt-3 mb-0" >
-                                @Error
-                            </div>
-                        }
                     </div>
                 </EditForm>
             </div>

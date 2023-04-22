@@ -1,6 +1,10 @@
-﻿namespace BFZ.AtividadeExtensionistaII.Viewmodels;
+﻿using BFZ.AtividadeExtensionistaII.Domain.Models;
+using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations;
 
-public class UnidadeDeNegocioViewModel
+namespace BFZ.AtividadeExtensionistaII.Viewmodels;
+
+public class UnidadeDeNegocioViewModel : BaseViewModel
 {
-     
+    public UnidadeDeNegocio CurrentItem { get; set; } = new UnidadeDeNegocio();
+
 }

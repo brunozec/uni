@@ -2,7 +2,7 @@
 
 namespace BFZ.AtividadeExtensionistaII.Viewmodels.Abstractions.Auth;
 
-public interface ILoginViewModel : IBaseViewModel
+public interface IAuthenticationViewModel : IBaseViewModel
 {
     public AutenticationRequest AutenticationRequest { get; set; }
 }   

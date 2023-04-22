@@ -1,10 +1,14 @@
 ﻿@using BFZ.AtividadeExtensionistaII.Pages.Auth
+@using BFZ.AtividadeExtensionistaII.Pages.Cadastros
 <Router
     AppAssembly="@typeof(Main).Assembly" >
     <Found
         Context="routeData" >
 
-        @if (!AuthStore.IsAuthenticated)
+        @if (!AuthStore.IsAuthenticated
+             &&  !routeData.PageType.Equals(typeof(Register))
+             &&  !routeData.PageType.Equals(typeof(UnidadeDeNegocio))
+            )
         {
             routeData = new RouteData(typeof(Login), new Dictionary<string, object>());
         }
