@@ -1,5 +1,7 @@
 ﻿using BFZ.AtividadeExtensionistaII.Common;
-using BFZ.AtividadeExtensionistaII.Common.Stores;
+using BFZ.AtividadeExtensionistaII.Domain.Abstractions.UnidadesDeNegocios;
+using BFZ.AtividadeExtensionistaII.Domain.Implementations;
+using BFZ.AtividadeExtensionistaII.Domain.Models;
 using BFZ.AtividadeExtensionistaII.Repositories;
 using BFZ.AtividadeExtensionistaII.Viewmodels;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
@@ -13,14 +15,8 @@ public static class Configuration
     public static void AddDepedencyInjection(
         this IServiceCollection service)
     {
-
         service.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
-        
-        #region store
 
-        service.AddSingleton<AuthStore>();
-
-        #endregion
 
         #region viewmodels
 
@@ -31,11 +27,14 @@ public static class Configuration
 
         #region services
 
+        service.AddSingleton<UnidadeDeNegocioService>();
+
         #endregion
 
         #region repositories
 
         service.AddSingleton<RepositoryBase>();
+        service.AddSingleton<IBaseRepository<UnidadeDeNegocio>, RepositoryBase<UnidadeDeNegocio>>();
 
         #endregion
     }

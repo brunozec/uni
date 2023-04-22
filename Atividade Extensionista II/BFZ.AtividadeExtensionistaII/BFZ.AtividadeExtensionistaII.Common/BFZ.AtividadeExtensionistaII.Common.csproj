@@ -16,4 +16,12 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Domain\BFZ.AtividadeExtensionistaII.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Stores\" />
+  </ItemGroup>
+
 </Project>

@@ -11,10 +11,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Implementations\" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <Reference Include="Microsoft.Maui.Controls">
       <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.any\7.0.81\ref\net7.0\Microsoft.Maui.Controls.dll</HintPath>
     </Reference>

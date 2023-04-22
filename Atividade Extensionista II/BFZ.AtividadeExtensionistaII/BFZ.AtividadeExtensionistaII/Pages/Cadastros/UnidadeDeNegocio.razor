@@ -7,7 +7,7 @@
 <h4>Cadastro de unidade de negócio</h4>
 
 <EditForm
-    Model="UnidadeDeNegocioViewModel.CurrentItem"
+    Model="UnidadeDeNegocioViewModel"
     OnValidSubmit="OnValidSubmit"
     OnInvalidSubmit="OnInvalidSubmit"
     style="height: 100%" >
@@ -16,70 +16,101 @@
         style="height: 100%" >
         <DataAnnotationsValidator/>
 
-        @if (UnidadeDeNegocioViewModel.CurrentItem.Id != null)
+        @if (UnidadeDeNegocioViewModel.Id != null)
         {
             <SfNumericTextBox
+                Enabled="@false"
                 TValue="int?"
-                @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Id"
+                @bind-Value="@UnidadeDeNegocioViewModel.Id"
                 FloatLabelType="FloatLabelType.Auto"
                 Placeholder="Código"/>
             <ValidationMessage
-                For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Id)" >
+                For="@(() => UnidadeDeNegocioViewModel.Id)" >
             </ValidationMessage>
         }
 
         <SfTextBox
-            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Nome"
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            @bind-Value="@UnidadeDeNegocioViewModel.Nome"
             Type="InputType.Text"
             FloatLabelType="FloatLabelType.Auto"
             Placeholder="Nome"/>
         <ValidationMessage
-            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Nome)" >
+            For="@(() => UnidadeDeNegocioViewModel.Nome)" >
         </ValidationMessage>
 
         <SfTextBox
-            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Email"
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            @bind-Value="@UnidadeDeNegocioViewModel.Email"
             Type="InputType.Email"
             FloatLabelType="FloatLabelType.Auto"
             Placeholder="Email"/>
 
         <ValidationMessage
-            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Email)" >
+            For="@(() => UnidadeDeNegocioViewModel.Email)" >
         </ValidationMessage>
 
         <SfMaskedTextBox
-            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.Fone"
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            @bind-Value="@UnidadeDeNegocioViewModel.Fone"
             Mask="(00) 00000-0000"
             FloatLabelType="FloatLabelType.Auto"
             Placeholder="Fone"/>
         <ValidationMessage
-            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.Fone)" >
+            For="@(() => UnidadeDeNegocioViewModel.Fone)" >
         </ValidationMessage>
 
         <SfMaskedTextBox
-            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.EnderecoCep"
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            @bind-Value="@UnidadeDeNegocioViewModel.EnderecoCep"
             Mask="00.000-000"
             FloatLabelType="FloatLabelType.Auto"
             Placeholder="CEP"/>
         <ValidationMessage
-            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.EnderecoCep)" >
+            For="@(() => UnidadeDeNegocioViewModel.EnderecoCep)" >
         </ValidationMessage>
 
         <SfTextBox
-            @bind-Value="@UnidadeDeNegocioViewModel.CurrentItem.EnderecoNumero"
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            @bind-Value="@UnidadeDeNegocioViewModel.EnderecoNumero"
             Type="InputType.Text"
             FloatLabelType="FloatLabelType.Auto"
             Placeholder="Número"/>
         <ValidationMessage
-            For="@(() => UnidadeDeNegocioViewModel.CurrentItem.EnderecoNumero)" >
+            For="@(() => UnidadeDeNegocioViewModel.EnderecoNumero)" >
         </ValidationMessage>
 
+
+        <SfTextBox
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="Senha"
+            Type="InputType.Password"
+            @bind-Value="@UnidadeDeNegocioViewModel.Senha" >
+        </SfTextBox>
+
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.Senha)"/>
+
+        <SfTextBox
+            Enabled="@(!UnidadeDeNegocioViewModel.IsBusy)"
+            FloatLabelType="FloatLabelType.Auto"
+            Placeholder="Senha"
+            Type="InputType.Password"
+            @bind-Value="@UnidadeDeNegocioViewModel.SenhaConfirmacao" >
+        </SfTextBox>
+
+        <ValidationMessage
+            For="@(() => UnidadeDeNegocioViewModel.SenhaConfirmacao)"/>
+
+
         @if ((TipoUnidadeDeNegocio)Tipo == TipoUnidadeDeNegocio.EntidadeCaridade
-             && UnidadeDeNegocioViewModel.CurrentItem.Id == null)
+             && UnidadeDeNegocioViewModel.Id == null)
         {
             <div
                 class="pt-3 pb-3 ml-3" >
                 <SfCheckBox
+                    Disabled="@(UnidadeDeNegocioViewModel.IsBusy)"
                     TChecked="bool"
                     @bind-Checked="@CheckBoxConfirmEntidadeCaridade"
                     LabelPosition="LabelPosition.After"

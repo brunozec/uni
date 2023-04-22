@@ -5,7 +5,7 @@
     <Found
         Context="routeData" >
 
-        @if (!AuthStore.IsAuthenticated
+        @if (!AuthenticationViewModel.UserIsAuthenticated
              &&  !routeData.PageType.Equals(typeof(Register))
              &&  !routeData.PageType.Equals(typeof(UnidadeDeNegocio))
             )

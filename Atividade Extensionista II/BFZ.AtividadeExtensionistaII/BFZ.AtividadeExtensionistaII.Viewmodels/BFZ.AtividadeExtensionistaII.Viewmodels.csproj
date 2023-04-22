@@ -7,7 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Reference Include="Microsoft.Maui.Controls">
+            <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.any\7.0.81\ref\net7.0\Microsoft.Maui.Controls.dll</HintPath>
+        </Reference>
       <ProjectReference Include="..\BFZ.AtividadeExtensionistaII.Domain\BFZ.AtividadeExtensionistaII.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Abstractions\Auth\" />
     </ItemGroup>
 
 </Project>

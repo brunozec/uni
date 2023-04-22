@@ -9,6 +9,8 @@ public partial class UnidadeDeNegocio
 {
     [Inject] private UnidadeDeNegocioViewModel UnidadeDeNegocioViewModel { get; set; }
 
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
     [Parameter]
     [SupplyParameterFromQuery(Name = "tipo")]
     public int Tipo { get; set; }
@@ -17,14 +19,14 @@ public partial class UnidadeDeNegocio
 
     bool _displayValidationErrorMessages = false;
 
-    private Task OnValidSubmit(
+    private async Task OnValidSubmit(
         EditContext arg)
     {
         _displayValidationErrorMessages = false;
 
-        if (UnidadeDeNegocioViewModel.CurrentItem.Id == null) { }
+        await UnidadeDeNegocioViewModel.SaveAsync();
 
-        return Task.CompletedTask;
+        NavigationManager.NavigateTo("/");
     }
 
     private Task OnInvalidSubmit(

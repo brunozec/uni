@@ -1,5 +1,4 @@
-﻿using BFZ.AtividadeExtensionistaII.Common.Stores;
-using BFZ.AtividadeExtensionistaII.Domain.Models;
+﻿using BFZ.AtividadeExtensionistaII.Domain.Models;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
 using Microsoft.AspNetCore.Components;
 
@@ -8,8 +7,6 @@ namespace BFZ.AtividadeExtensionistaII.Pages.Auth;
 public partial class Register
 {
     [Inject] private AuthenticationViewModel AuthenticationViewModel { get; set; }
-
-    [Inject] private AuthStore AuthStore { get; set; }
 
     [Inject] private NavigationManager NavigationManager { get; set; }
 

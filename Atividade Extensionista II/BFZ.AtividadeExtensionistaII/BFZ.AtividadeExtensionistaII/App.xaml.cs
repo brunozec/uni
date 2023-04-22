@@ -1,8 +1,10 @@
-﻿namespace BFZ.AtividadeExtensionistaII;
+﻿using BFZ.AtividadeExtensionistaII.Repositories;
+
+namespace BFZ.AtividadeExtensionistaII;
 
 public partial class App : Application
 {
-	public App()
+	public App(RepositoryBase repositoryBase)
 	{
 		InitializeComponent();
 

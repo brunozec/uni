@@ -1,8 +1,9 @@
 ﻿using BFZ.AtividadeExtensionistaII.Viewmodels.Abstractions;
+using Microsoft.Maui.Controls;
 
 namespace BFZ.AtividadeExtensionistaII.Viewmodels.Implementations;
 
-public class BaseViewModel : IBaseViewModel
+public class BaseViewModel : BindableObject, IBaseViewModel
 {
     private bool _isLoading;
     private bool _isBusy;
