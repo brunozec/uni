@@ -19,6 +19,9 @@ public class LoteDeProducao: IEntityId
     /// Código identificador do cadastro do produto
     /// </summary>
     public int? IdProduto { get; set; }
+    
+    [SQLite.Ignore]
+    public string DescricaoProduto { get; set; }
 
     /// <summary>
     /// Quantidade (unidades) do produto 

@@ -12,7 +12,7 @@ public class Atividade : IEntityId
     /// <summary>
     /// Código identificador da entidade
     /// </summary>
-    [PrimaryKey] 
+    [PrimaryKey]
     public int? Id { get; set; }
 
     /// <summary>
@@ -29,4 +29,13 @@ public class Atividade : IEntityId
     /// Data de realização da atividade
     /// </summary>
     public DateTime Data { get; set; }
+
+    /// <summary>
+    /// Indica o tipo da atividade
+    /// Plantio = 0 
+    /// AplicacaoDefensivo = 1
+    /// Colheita = 2 
+    /// Doacao = 3
+    /// </summary>
+    public TipoAtividade Tipo { get; set; }
 }

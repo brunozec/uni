@@ -24,4 +24,6 @@ public class Produto : IEntityId
     /// Observações
     /// </summary>
     public string? Observacao { get; set; }
+    
+    public int TempoProducaoEmDias { get; set; }
 }

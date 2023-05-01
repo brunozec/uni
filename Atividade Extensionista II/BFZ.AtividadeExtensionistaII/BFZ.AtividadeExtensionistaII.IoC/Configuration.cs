@@ -22,12 +22,17 @@ public static class Configuration
 
         service.AddSingleton<AuthenticationViewModel>();
         service.AddSingleton<UnidadeDeNegocioViewModel>();
+        service.AddSingleton<ProdutoViewModel>();
+        service.AddSingleton<AtividadeViewModel>();
+        service.AddSingleton<LoteDeProducaoViewModel>();
 
         #endregion
 
         #region services
 
         service.AddSingleton<UnidadeDeNegocioService>();
+        service.AddSingleton<LoteDeProducaoService>();
+        service.AddSingleton<ProdutoService>();
 
         #endregion
 
@@ -35,6 +40,9 @@ public static class Configuration
 
         service.AddSingleton<RepositoryBase>();
         service.AddSingleton<IBaseRepository<UnidadeDeNegocio>, RepositoryBase<UnidadeDeNegocio>>();
+        service.AddSingleton<IBaseRepository<LoteDeProducao>, RepositoryBase<LoteDeProducao>>();
+        service.AddSingleton<IBaseRepository<Atividade>, RepositoryBase<Atividade>>();
+        service.AddSingleton<IBaseRepository<Produto>, RepositoryBase<Produto>>();
 
         #endregion
     }

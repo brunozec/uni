@@ -1,31 +1,275 @@
 ﻿@page "/"
+@using BFZ.AtividadeExtensionistaII.Domain.Models
+@using AnimationEffect = Syncfusion.Blazor.AnimationEffect
+
+@if (ShowNovoPlanejamento)
+{
+    <div
+        style="padding-top: 30px" >
+        <SfButton
+            CssClass="bfz-button bfz-btn-novo-planejamento"
+            Content="Novo planejamento"
+            IsPrimary="true"
+            @onclick="@OnNovoPlanejamento"/>
+    </div>
+}
+
+<div
+    style="padding-top: 30px; height: 100% !important" >
+    <SfTab
+        @ref="@SfTabObj"
+        Height="100%"
+        AllowDragAndDrop="false"
+        OverflowMode="OverflowMode.Scrollable"
+        ShowCloseButton="false" >
+        <TabAnimationSettings>
+            <TabAnimationPrevious
+                Effect="AnimationEffect.None" >
+            </TabAnimationPrevious>
+            <TabAnimationNext
+                Effect="AnimationEffect.None" >
+            </TabAnimationNext>
+        </TabAnimationSettings>
+        <TabEvents
+            Selecting="OnTabSelecting"
+
+            Selected="@OnTabSelected" >
+
+        </TabEvents>
+        <TabItems>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader
+                        IconCss="bx bx-donate-heart"
+                        IconPosition="left"
+                        Text="Doações" >
+                    </TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+
+                    <SfGrid
+                        Width="100%"
+                        Height="100%"
+                        TValue="Atividade" >
+                        <GridColumns>
+                            <GridColumn
+                                Field="@nameof(Atividade.Id)"
+                                HeaderText="Código"
+                                AutoFit="true"
+                                Visible="false" >
+                            </GridColumn>
+                            <GridColumn
+                                Format="dd/MM/yyyy"
+                                Field="@nameof(Atividade.Data)"
+                                HeaderText="Data"
+                                AutoFit="true" >
+                            </GridColumn>
+                            <GridColumn
+                                Field="@nameof(Atividade.Observacao)"
+                                HeaderText="Data"
+                                AutoFit="true" >
+                            </GridColumn>
+                        </GridColumns>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <span>Nenhum item econtrado</span>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                    </SfGrid>
+
+                </ContentTemplate>
+
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader
+                        IconCss="bx bx-leaf"
+                        IconPosition="left"
+                        Text="Lotes" >
+                    </TabHeader>
+                </ChildContent>
+                <ContentTemplate>
 
 
-<SfTab>
-    <TabItems>
-        <TabItem
-            Content="Twitter is an online social networking service that enables users to send and read short 140-charactermessages called tweets.Registered users can read and post tweets, but those who are unregistered can only readthem.Users access Twitter through the website interface, SMS or mobile device app Twitter Inc. is based in SanFrancisco and has more than 25 offices around the world.Twitter was created in March 2006 by Jack Dorsey,Evan Williams, Biz Stone, and Noah Glass and launched in July 2006. The service rapidly gained worldwide popularity,with more than 100 million users posting 340 million tweets a day in 2012.The service also handled 1.6 billionsearch queries per day." >
-            <ChildContent>
-                <TabHeader
-                    Text="Twitter" >
-                </TabHeader>
-            </ChildContent>
-        </TabItem>
-        <TabItem
-            Content="Facebook is an online social networking service headquartered in Menlo Park, California. Its website waslaunched on February 4, 2004, by Mark Zuckerberg with his Harvard College roommates and fellow students EduardoSaverin, Andrew McCollum, Dustin Moskovitz and Chris Hughes." >
-            <ChildContent>
-                <TabHeader
-                    Text="Facebook" >
-                </TabHeader>
-            </ChildContent>
-        </TabItem>
-        <TabItem
-            Content="WhatsApp Messenger is a proprietary cross-platform instant messaging client for smartphones that operatesunder a subscription business model.It uses the Internet to send text messages, images, video, user location andaudio media messages to other users using standard cellular mobile numbers. As of February 2016, WhatsApp had a userbase of up to one billion,[10] making it the most globally popular messaging application.WhatsApp Inc., based inMountain View, California, was acquired by Facebook Inc.on February 19, 2014, for approximately US$19.3 billion." >
-            <ChildContent>
-                <TabHeader
-                    Text="Whatsapp" >
-                </TabHeader>
-            </ChildContent>
-        </TabItem>
-    </TabItems>
-</SfTab>
+                    <SfGrid
+                        Width="100%"
+                        Height="100%"
+                        TValue="LoteDeProducao"
+                        DataSource="@ListaLotes" >
+                        <GridColumns>
+                            <GridColumn
+                                Field="@nameof(LoteDeProducao.Id)"
+                                HeaderText="Código"
+                                AutoFit="true" >
+                            </GridColumn>
+                            <GridColumn
+                                Format="dd/MM/yyyy"
+                                Field="@nameof(LoteDeProducao.DataPlantio)"
+                                HeaderText="Plantio"
+                                Width="100px" >
+                            </GridColumn>
+                            <GridColumn
+                                Field="@nameof(LoteDeProducao.DescricaoProduto)"
+                                HeaderText="Produto"
+                                AutoFit="true" >
+                            </GridColumn>
+
+                            <GridColumn
+                                Format="N0"
+                                Field="@nameof(LoteDeProducao.Quantidade)"
+                                HeaderText="Quantidade"
+                                AutoFit="true" >
+                            </GridColumn>
+                            <GridColumn
+                                Format="dd/MM/yyyy"
+                                Field="@nameof(LoteDeProducao.DataEncerramento)"
+                                HeaderText="Encerramento"
+                                AutoFit="true" >
+                            </GridColumn>
+                        </GridColumns>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <span>Nenhum item econtrado</span>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                    </SfGrid>
+
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader
+                        IconCss="bx bx-cog"
+                        IconPosition="left"
+                        Text="Configurações" >
+                    </TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+
+                </ContentTemplate>
+            </TabItem>
+        </TabItems>
+    </SfTab>
+</div>
+
+@if (ShowPlanejamentoModal)
+{
+    <SfDialog
+        Width="100%"
+        Height="100%"
+        @ref="@SfDialogObj" >
+        <DialogTemplates>
+            <Header> Novo planejamento </Header>
+            <Content>
+
+
+                <EditForm
+
+                    EditContext="@PlanejamentoEditContext"
+                    OnValidSubmit="HandleValidSubmit"
+                    OnInvalidSubmit="OnInvalidSubmit" >
+                    <DataAnnotationsValidator/>
+                    <div
+                        class="form-group" >
+
+                        @if (LoteDeProducaoViewModel.Id != null)
+                        {
+                            <SfTextBox
+                                FloatLabelType="FloatLabelType.Auto"
+                                PlaceHolder="Código"
+                                @bind="@LoteDeProducaoViewModel.Id"
+                                Enabled="false"/>
+                            <ValidationMessage
+                                For="@(() => LoteDeProducaoViewModel.Id)"/>
+                        }
+
+                        <SfDatePicker
+                            FloatLabelType="FloatLabelType.Auto"
+                            TValue="DateTime?"
+                            @bind="@LoteDeProducaoViewModel.DataPlantio"
+                            Placeholder="Previsão de plantio"
+                            CalendarMode="CalendarType.Gregorian"/>
+                        <ValidationMessage
+                            For="@(() => LoteDeProducaoViewModel.DataPlantio)"/>
+
+                        <SfDatePicker
+                            FloatLabelType="FloatLabelType.Auto"
+                            TValue="DateTime?"
+                            @bind="@LoteDeProducaoViewModel.DataEncerramento"
+                            Placeholder="Previsão de encerramento"
+                            CalendarMode="CalendarType.Gregorian"
+                            Enabled="false"/>
+
+                        <ValidationMessage
+                            For="@(() => LoteDeProducaoViewModel.DataEncerramento)"/>
+
+                        <SfComboBox
+                            FloatLabelType="FloatLabelType.Auto"
+                            @bind-Value="@LoteDeProducaoViewModel.IdProduto"
+                            TItem="Produto"
+                            TValue="int?"
+                            Placeholder="Selecione um produto"
+                            DataSource="@ListaProdutos" >
+
+                            <ComboBoxFieldSettings
+                                Value="Id"
+                                Text="Descricao" >
+                            </ComboBoxFieldSettings>
+                        </SfComboBox>
+
+                        <ValidationMessage
+                            For="@(() => LoteDeProducaoViewModel.IdProduto)"/>
+
+                        <SfNumericTextBox
+                            TValue="decimal?"
+                            Placeholder="Quantidade"
+                            FloatLabelType="FloatLabelType.Auto"
+                            bind-Value="@LoteDeProducaoViewModel.Quantidade" >
+                        </SfNumericTextBox>
+                        <ValidationMessage
+                            For="@(() => LoteDeProducaoViewModel.Quantidade)"/>
+
+                        <SfTextBox
+                            Placeholder="Observação"
+                            FloatLabelType="FloatLabelType.Auto"
+                            @bind="@LoteDeProducaoViewModel.Observacao"
+                            Multiline="true"
+                            Enabled="@(LoteDeProducaoViewModel.DataEncerramento == null)"/>
+
+                        <ValidationMessage
+                            For="@(() => LoteDeProducaoViewModel.Observacao)"/>
+                    </div>
+
+
+                    @if (_displayValidationErrorMessages)
+                    {
+                        <div
+                            class="col-md-4"
+                            style="margin-top:10px" >
+                            <label>Validation Messages: </label>
+                            <ValidationSummary/>
+                        </div>
+                    }
+
+                </EditForm>
+
+            </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton
+                Content="Cancelar"
+                CssClass="bfz-button bfz-secondary"
+                IsPrimary="false"
+                OnClick="@OnCancelarClicked"/>
+            <DialogButton
+                Content="Salvar"
+                CssClass="bfz-button bfz-primay"
+                IsPrimary="true"
+                OnClick="@OnSalvarClicked"/>
+        </DialogButtons>
+        <DialogAnimationSettings
+            Effect="@DialogEffect.None" >
+        </DialogAnimationSettings>
+
+    </SfDialog>
+}

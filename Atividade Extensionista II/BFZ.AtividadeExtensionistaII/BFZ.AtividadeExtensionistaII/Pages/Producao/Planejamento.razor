@@ -1,3 +1,60 @@
 ﻿@page "/Planejamento"
+@using BFZ.AtividadeExtensionistaII.Domain.Models
 
-<h4>Planejamento</h4>
+<h4>Novo planejamento</h4>
+
+<div>
+
+    <SfTextBox
+        @bind="@ViewModel.Id"
+        Enabled="false"/>
+
+    <SfDatePicker
+        TValue="DateTime"
+        @bind="@ViewModel.DataPlantio"
+        Placeholder="Previsão de plantio"
+        CalendarMode="CalendarType.Gregorian"/>
+
+    <SfDatePicker
+        TValue="DateTime"
+        @bind="@ViewModel.DataEncerramento"
+        Placeholder="Previsão de encerramento"
+        CalendarMode="CalendarType.Gregorian"
+        Enabled="false"/>
+
+    <SfComboBox
+        @bind-Value="@ViewModel.IdProduto"
+        TItem="Produto"
+        TValue="int?"
+        Placeholder="Selecione um produto"
+        DataSource="@ListaProdutos" >
+
+        <ComboBoxFieldSettings
+            Value="ID"
+            Text="Text" >
+        </ComboBoxFieldSettings>
+    </SfComboBox>
+
+    <SfTextBox
+        @bind="@ViewModel.Observacao"
+        Multiline="true"
+        Enabled="@(ViewModel.DataEncerramento == null)"/>
+
+</div>
+
+<div
+    class="sideBarFooter" >
+
+    <SfButton
+        @onclick="OnCancelar"
+        Content="Cancelar"
+        IsPrimary="false"
+        CssClass="bfz-secondary"/>
+
+    <SfButton
+        @onclick="OnSalvar"
+        Content="Salvar"
+        IsPrimary="true"
+        CssClass="bfz-primary"/>
+
+</div>

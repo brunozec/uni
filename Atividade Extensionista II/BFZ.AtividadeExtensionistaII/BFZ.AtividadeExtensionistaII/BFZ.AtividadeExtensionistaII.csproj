@@ -28,6 +28,8 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <LangVersion>default</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -54,8 +56,15 @@
         <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
         <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.4" />
         <PackageReference Include="Syncfusion.Blazor.Buttons" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.Calendars" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.Data" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.Grid" Version="21.1.41" />
         <PackageReference Include="Syncfusion.Blazor.Inputs" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.Lists" Version="21.1.41" />
         <PackageReference Include="Syncfusion.Blazor.Navigations" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.Notifications" Version="21.1.41" />
+        <PackageReference Include="Syncfusion.Blazor.Popups" Version="21.1.41" />
         <PackageReference Include="Syncfusion.Blazor.Spinner" Version="21.1.41" />
         <PackageReference Include="Syncfusion.Blazor.Themes" Version="21.1.41" />
         <PackageReference Include="Syncfusion.Maui.Core" Version="21.1.41" />

@@ -33,5 +33,8 @@ public class RepositoryBase
         DatabaseConnection = new SQLiteAsyncConnection(DatabasePath, Flags);
 
         await DatabaseConnection.CreateTableAsync<UnidadeDeNegocio>();
+        await DatabaseConnection.CreateTableAsync<Produto>();
+        await DatabaseConnection.CreateTableAsync<Atividade>();
+        await DatabaseConnection.CreateTableAsync<LoteDeProducao>();
     }
 }
