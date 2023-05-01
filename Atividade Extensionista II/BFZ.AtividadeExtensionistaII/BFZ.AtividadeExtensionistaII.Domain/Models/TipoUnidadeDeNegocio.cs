@@ -2,6 +2,6 @@
 
 public enum TipoUnidadeDeNegocio
 {
-    Agricultor
+        Agricultor
     , EntidadeCaridade
 }

@@ -1,9 +1,16 @@
-﻿namespace BFZ.AtividadeExtensionistaII.PagesMaui;
+﻿using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
+using Microsoft.AspNetCore.Components;
+using Syncfusion.Maui.TabView;
 
-public partial class IndexPage:ContentPage
+namespace BFZ.AtividadeExtensionistaII.PagesMaui;
+
+public partial class IndexPage : ContentPage
 {
-	public IndexPage()
-	{
-		InitializeComponent();
-	}
+    [Inject] public AuthenticationViewModel AuthenticationViewModel { get; set; }
+    
+    public IndexPage()
+    {
+        InitializeComponent();
+        
+    }
 }

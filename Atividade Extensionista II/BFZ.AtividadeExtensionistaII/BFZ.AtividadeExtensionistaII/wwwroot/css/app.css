@@ -1595,7 +1595,7 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
 }
 
 
-.mp-button {
+.bfz-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -1610,7 +1610,23 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     margin-right: 5px;
 }
 
-.mp-rounded-button {
+.bfz-button-w-100 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    height: 40px;
+    min-width: 157px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(32, 47, 47, 0.12);
+    border: unset;
+    box-sizing: unset;
+    margin-right: 5px;
+    width: 100% !important;
+}
+
+.bfz-rounded-button {
     display: flex;
     align-items: center;
     height: 32px;
@@ -1621,7 +1637,7 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     box-sizing: unset;
 }
 
-.mp-rounded-button-small {
+.bfz-rounded-button-small {
     display: flex;
     height: 24px;
     width: 24px;
@@ -1631,26 +1647,26 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     box-sizing: unset;
 }
 
-.mp-primary {
+.bfz-primary {
     background: var(--bfz-primary) !important;
     color: white;
 }
 
-.mp-danger {
+.bfz-danger {
     color: var(--bfz-text-dark) !important;
     background: white;
     box-shadow: none;
     border: 1px solid #BFD5DF;
 }
 
-.mp-secondary {
+.bfz-secondary {
     color: var(--bfz-text-dark) !important;
     background: white;
     box-shadow: none;
     border: 1px solid #BFD5DF;
 }
 
-.mp-text {
+.bfz-text {
     font-family: Inter, serif;
     font-style: normal;
     font-weight: 600;
@@ -1658,22 +1674,22 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     line-height: 125%;
 }
 
-.mp-icon {
+.bfz-icon {
     display: flex;
 }
 
-.mp-span-primary {
+.bfz-span-primary {
     color: white;
 }
 
-.mp-span-secondary {
+.bfz-span-secondary {
     color: var(--bfz-text-dark) !important;
 }
 
-.mp-span-icon {
+.bfz-span-icon {
 }
 
-.mp-disabled {
+.bfz-disabled {
     background: #E2E7EA !important;
     box-shadow: none;
     border: #E2E7EA;
@@ -1681,77 +1697,77 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     pointer-events: none;
 }
 
-.mp-primary:hover {
+.bfz-primary:hover {
     background-color: var(--bfz-primary-hover);
     box-shadow: 0px 6px 8px rgba(32, 47, 47, 0.16);
 }
 
-.mp-primary:focus {
+.bfz-primary:focus {
     background-color: var(--bfz-primary-focus);
     box-shadow: 0px 0px 12px rgba(128, 221, 59, 0.8);
 }
 
-.mp-primary:active {
+.bfz-primary:active {
     background-color: var(--bfz-primary-active);
     box-shadow: none;
 }
 
-.mp-secondary:hover {
+.bfz-secondary:hover {
     background-color: var(--bfz-secondary-hover);
     box-shadow: 0px 6px 8px rgba(32, 47, 47, 0.16);
 }
 
-.mp-secondary:focus {
+.bfz-secondary:focus {
     background-color: var(--bfz-secondary-focus);
     box-shadow: 0px 0px 12px rgba(46, 169, 221, 0.6);
 }
 
-.mp-secondary:active {
+.bfz-secondary:active {
     background-color: var(--bfz-secondary-active);
     box-shadow: none;
 }
 
-.mp-danger:hover {
+.bfz-danger:hover {
     background-color: red;
     color: white !important;
     box-shadow: 0px 6px 8px rgba(255, 0, 0, 0.26);
 }
 
-.mp-danger:focus {
+.bfz-danger:focus {
     background-color: red;
     border: 1px solid red;
     color: white !important;
     box-shadow: 0px 0px 12px red;
 }
 
-.mp-danger:active {
+.bfz-danger:active {
     background-color: red;
     box-shadow: none;
 }
 
 
-.mp-button-login {
+.bfz-button-login {
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
     margin-top: 24px !important;
 }
 
-.mp-button-recover-password {
+.bfz-button-recover-password {
     margin-left: 24px !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
     margin-top: 24px !important;
 }
 
-.mp-recover-password {
+.bfz-recover-password {
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
     margin-top: 24px !important;
 }
 
-.mp-text-field-login {
+.bfz-text-field-login {
     width: 100% !important
 }
 

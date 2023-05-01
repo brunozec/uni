@@ -1,0 +1,17 @@
+﻿.login-container {
+    position: relative;
+    background-color: white;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding-top: 200px;
+    align-items: center;
+    width: 100%;
+    max-width: 100%
+}
+
+.login-form {
+    max-width: 100%;
+    width: 500px;
+    padding: 5px
+}

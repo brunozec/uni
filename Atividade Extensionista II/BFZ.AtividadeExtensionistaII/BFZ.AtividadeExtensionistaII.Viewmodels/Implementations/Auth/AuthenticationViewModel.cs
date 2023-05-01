@@ -8,11 +8,48 @@ public class AuthenticationViewModel : BaseViewModel
     private readonly IBaseRepository<UnidadeDeNegocio> _unidadeDeNegocioRepository;
     public AutenticationRequest AutenticationRequest { get; set; } = new AutenticationRequest();
 
-    public string UserEmail { get; set; }
+    private string _userEmail;
 
-    public int UserUnidadeDeNegocioId { get; set; }
+    public string UserEmail
+    {
+        get => _userEmail;
+        set
+        {
+            if (value == _userEmail) return;
+            _userEmail = value;
 
-    public TipoUnidadeDeNegocio UserTipoUnidadeDeNegocio { get; set; }
+            OnPropertyChanged();
+        }
+    }
+
+    private int _userUnidadeDeNegocioId;
+
+    public int UserUnidadeDeNegocioId
+    {
+        get => _userUnidadeDeNegocioId;
+        set
+        {
+            if (value == _userUnidadeDeNegocioId) return;
+            _userUnidadeDeNegocioId = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private TipoUnidadeDeNegocio _userTipoUnidadeDeNegocio;
+
+    public TipoUnidadeDeNegocio UserTipoUnidadeDeNegocio
+    {
+        get => _userTipoUnidadeDeNegocio;
+        set
+        {
+            if (value == _userTipoUnidadeDeNegocio) return;
+            _userTipoUnidadeDeNegocio = value;
+
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsAgricultorFamiliar => UserTipoUnidadeDeNegocio == TipoUnidadeDeNegocio.Agricultor;
 
     public bool UserIsAuthenticated => !string.IsNullOrWhiteSpace(UserEmail);
 
@@ -32,7 +69,7 @@ public class AuthenticationViewModel : BaseViewModel
             UserEmail = empresa.Email;
             UserUnidadeDeNegocioId = (int)empresa.Id;
             UserTipoUnidadeDeNegocio = empresa.Tipo;
-            
+
             return true;
         }
 

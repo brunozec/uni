@@ -2,12 +2,15 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:BFZ.AtividadeExtensionistaII"
+             xmlns:local="clr-namespace:BFZ.AtividadeExtensionistaII.PagesMaui"
              xmlns:pages="clr-namespace:BFZ.AtividadeExtensionistaII.Pages"
+             xmlns:pagesListas="clr-namespace:BFZ.AtividadeExtensionistaII.Pages.Listas"
              x:Class="BFZ.AtividadeExtensionistaII.PagesMaui.IndexPage"
              xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             xmlns:auth="clr-namespace:BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;assembly=BFZ.AtividadeExtensionistaII.Viewmodels"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             x:DataType="auth:AuthenticationViewModel">
 
     <ContentPage.Content>
         <tabView:SfTabView x:Name="tabView"
@@ -24,32 +27,37 @@
 
                         <BlazorWebView HostPage="wwwroot/index.html">
                             <BlazorWebView.RootComponents>
-                                <RootComponent Selector="#app" ComponentType="{x:Type pages:Index}" />
+                                <RootComponent Selector="#app" ComponentType="{x:Type pagesListas:ListaPlanejamentos}" />
                             </BlazorWebView.RootComponents>
                         </BlazorWebView>
 
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
 
-                <tabView:SfTabItem Header="Atividades">
+                <tabView:SfTabItem Header="Doações"
+                                   IsVisible="{Binding IsAgricultorFamiliar}">
                     <tabView:SfTabItem.Content>
                         <BlazorWebView HostPage="wwwroot/index.html">
                             <BlazorWebView.RootComponents>
-                                <RootComponent Selector="#app" ComponentType="{x:Type pages:Index}" />
+                                <RootComponent Selector="#app"
+                                               ComponentType="{x:Type pagesListas:ListaDoacoesRealizadas}" />
                             </BlazorWebView.RootComponents>
                         </BlazorWebView>
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
 
-                <tabView:SfTabItem Header="Doações">
+                <tabView:SfTabItem Header="Doações2"
+                                   IsVisible="{Binding !IsAgricultorFamiliar}">
                     <tabView:SfTabItem.Content>
                         <BlazorWebView HostPage="wwwroot/index.html">
                             <BlazorWebView.RootComponents>
-                                <RootComponent Selector="#app" ComponentType="{x:Type pages:Index}" />
+                                <RootComponent Selector="#app"
+                                               ComponentType="{x:Type pagesListas:ListaDoacoesRecebidas}" />
                             </BlazorWebView.RootComponents>
                         </BlazorWebView>
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
+
             </tabView:SfTabView.Items>
         </tabView:SfTabView>
     </ContentPage.Content>

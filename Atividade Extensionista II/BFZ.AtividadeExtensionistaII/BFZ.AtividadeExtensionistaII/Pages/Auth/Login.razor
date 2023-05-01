@@ -2,9 +2,6 @@
 
 
 <PageTitle>Entrar</PageTitle>
-
-<h4>Entrar</h4>
-
 @if (AuthenticationViewModel.IsBusy)
 {
     <SfSpinner
@@ -17,18 +14,15 @@ else
 {
     <div
         class="justify-content-center align-items-center h-100 w-100" >
+
+
         <div
             class="login-container" >
 
-            <h6>
-                Novo por aqui?
-                <a
-                    href="/register"
-                    style="color: #0a53be" >
-                    Clique aqui
-                </a> para se cadastrar!
-            </h6>
 
+            <h4>Bem vindo</h4>
+
+            <h9>Realize o login ou cadastre-se</h9>
 
             <div
                 class="login-form" >
@@ -62,31 +56,41 @@ else
                             For="@(() => AuthenticationViewModel.AutenticationRequest.Senha)"/>
 
                     </div>
-                    
-                    
-        @if (_displayValidationErrorMessages)
-        {
-            <div
-                class="col-md-4"
-                style="margin-top:10px" >
-                <label>Validation Messages: </label>
-                <ValidationSummary/>
-            </div>
-        }
-                    
-                    <div
-                        class="d-flex"
-                        style="padding-top: 10px; width: 100%" >
+
+
+                    @if (_displayValidationErrorMessages)
+                    {
+                        <div
+                            class="col-md-4"
+                            style="margin-top:10px" >
+                            <label>Validation Messages: </label>
+                            <ValidationSummary/>
+                        </div>
+                    }
+                    <div style="padding-top: 30px;width: 100%" >
                         <SfProgressButton
                             Content="Entrar"
                             IsPrimary="true"
-                            CssClass="mp-button"
+                            CssClass="bfz-button-w-100"
                             EnableProgress="@AuthenticationViewModel.IsBusy" >
                             <ProgressButtonSpinSettings
                                 Position="SpinPosition.Right" >
                             </ProgressButtonSpinSettings>
                         </SfProgressButton>
+                    </div>
 
+                    <div
+                        class="d-flex"
+                        style="padding-top: 30px; width: 100%" >
+
+                        <h6>
+                            Novo por aqui?
+                            <a
+                                href="/register"
+                                style="color: #0a53be" >
+                                Clique aqui
+                            </a> para se cadastrar!
+                        </h6>
                     </div>
                 </EditForm>
             </div>

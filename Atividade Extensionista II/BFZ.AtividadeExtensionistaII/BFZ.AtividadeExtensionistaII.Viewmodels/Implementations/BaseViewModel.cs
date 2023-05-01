@@ -1,9 +1,11 @@
-﻿using BFZ.AtividadeExtensionistaII.Viewmodels.Abstractions;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using BFZ.AtividadeExtensionistaII.Viewmodels.Abstractions;
 using Microsoft.Maui.Controls;
 
 namespace BFZ.AtividadeExtensionistaII.Viewmodels.Implementations;
 
-public class BaseViewModel : BindableObject, IBaseViewModel
+public class BaseViewModel : IBaseViewModel, INotifyPropertyChanged
 {
     private bool _isLoading;
     private bool _isBusy;
@@ -68,5 +70,24 @@ public class BaseViewModel : BindableObject, IBaseViewModel
         IsLoading = false;
 
         return result;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged(
+        [CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(
+        ref T field
+        , T value
+        , [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
     }
 }
