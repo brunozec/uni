@@ -33,6 +33,7 @@ public static class Configuration
         service.AddSingleton<UnidadeDeNegocioService>();
         service.AddSingleton<LoteDeProducaoService>();
         service.AddSingleton<ProdutoService>();
+        service.AddSingleton<AtividadeService>();
 
         #endregion
 

@@ -16,9 +16,9 @@ public class Atividade : IEntityId
     public int? Id { get; set; }
 
     /// <summary>
-    /// Descrição da atividade sendo realizada
+    /// Código do lote de produção
     /// </summary>
-    public string Descricao { get; set; }
+    public int LoteId { get; set; }
 
     /// <summary>
     /// Observação e dados adicionais
@@ -28,7 +28,7 @@ public class Atividade : IEntityId
     /// <summary>
     /// Data de realização da atividade
     /// </summary>
-    public DateTime Data { get; set; }
+    public DateTime? Data { get; set; }
 
     /// <summary>
     /// Indica o tipo da atividade
@@ -36,6 +36,31 @@ public class Atividade : IEntityId
     /// AplicacaoDefensivo = 1
     /// Colheita = 2 
     /// Doacao = 3
+    /// Descarte =4
     /// </summary>
     public TipoAtividade Tipo { get; set; }
+
+    [Ignore]
+    public string DescricaoTipo
+    {
+        get
+        {
+            return Tipo switch
+            {
+                TipoAtividade.Plantio => "Plantio"
+                , TipoAtividade.AplicacaoDefensivo => "Aplicação de defensivo"
+                , TipoAtividade.Colheita => "Colheita"
+                , TipoAtividade.Doacao => "Doação"
+                , TipoAtividade.Descarte => "Descarte"
+                , _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+    }
+}
+
+public class AtividadeTipo
+{
+    public int Id { get; set; }
+
+    public string Descricao { get; set; }
 }

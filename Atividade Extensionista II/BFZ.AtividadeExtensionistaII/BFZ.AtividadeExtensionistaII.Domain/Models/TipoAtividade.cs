@@ -5,5 +5,6 @@ public enum TipoAtividade
     Plantio,
     AplicacaoDefensivo,
     Colheita,
-    Doacao
+    Doacao,
+    Descarte
 }

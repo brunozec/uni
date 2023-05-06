@@ -96,6 +96,9 @@
                         Height="100%"
                         TValue="LoteDeProducao"
                         DataSource="@ListaLotes" >
+                        <GridEvents
+                            TValue="LoteDeProducao"
+                            RowSelected="@OnLoteProducaoSelected"/>
                         <GridColumns>
                             <GridColumn
                                 Field="@nameof(LoteDeProducao.Id)"
@@ -136,28 +139,194 @@
 
                 </ContentTemplate>
             </TabItem>
-            <TabItem>
-                <ChildContent>
-                    <TabHeader
-                        IconCss="bx bx-cog"
-                        IconPosition="left"
-                        Text="Configurações" >
-                    </TabHeader>
-                </ChildContent>
-                <ContentTemplate>
-
-                </ContentTemplate>
-            </TabItem>
         </TabItems>
     </SfTab>
 </div>
+
+
+@if (ShowAtividadesModal)
+{
+    <SfDialog
+        Width="100%"
+        Height="100%"
+        @ref="@AtividadesSfDialogObj" >
+        <DialogTemplates>
+            <Header>
+
+
+                <div
+                    style="padding-top: 30px" >
+                    <SfButton
+                        CssClass="bfz-button bfz-btn-novo-planejamento "
+                        Content="Nova atividade"
+                        IsPrimary="true"
+                        @onclick="@OnNovaAtividade"/>
+                </div>
+
+                <div
+                    style="padding-top: 30px" >
+                    Atividades
+                </div>
+            </Header>
+            <Content>
+
+                <SfGrid
+                    Width="100%"
+                    Height="100%"
+                    TValue="Atividade"
+                    DataSource="@ListaAtividades" >
+                    <GridColumns>
+                        <GridColumn
+                            Field="@nameof(Atividade.Id)"
+                            HeaderText="Código"
+                            AutoFit="true" >
+                        </GridColumn>
+                        <GridColumn
+                            Format="dd/MM/yyyy"
+                            Field="@nameof(Atividade.Data)"
+                            HeaderText="Data"
+                            Width="100px" >
+                        </GridColumn>
+                        <GridColumn
+                            Format="N0"
+                            Field="@nameof(Atividade.DescricaoTipo)"
+                            HeaderText="Atividade"
+                            AutoFit="true" >
+                        </GridColumn>
+                    </GridColumns>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <span>Nenhum item econtrado</span>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                </SfGrid>
+
+            </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton
+                Content="Fechar"
+                CssClass="bfz-button bfz-secondary"
+                IsPrimary="false"
+                OnClick="@OnAtividadesModalFecharClicked"/>
+        </DialogButtons>
+        <DialogAnimationSettings
+            Effect="@DialogEffect.None" >
+        </DialogAnimationSettings>
+
+    </SfDialog>
+}
+
+
+@if (ShowNovaAtividadeModal)
+{
+    <SfDialog
+        Width="100%"
+        Height="100%"
+        @ref="@NovaAtividadesSfDialogObj" >
+        <DialogTemplates>
+            <Header> Nova atividade </Header>
+            <Content>
+
+
+                <EditForm
+
+                    EditContext="@AtividadeEditContext"
+                    OnValidSubmit="AtividadeHandleValidSubmit"
+                    OnInvalidSubmit="AtividadeOnInvalidSubmit" >
+                    <DataAnnotationsValidator/>
+                    <div
+                        class="form-group" >
+
+                        @if (AtividadeViewModel.Id != null)
+                        {
+                            <SfNumericTextBox
+                                TValue="int?"
+                                FloatLabelType="FloatLabelType.Auto"
+                                PlaceHolder="Código"
+                                @bind-Value="@AtividadeViewModel.Id"
+                                Enabled="false"/>
+                            <ValidationMessage
+                                For="@(() => AtividadeViewModel.Id)"/>
+                        }
+
+                        <SfDatePicker
+                            FloatLabelType="FloatLabelType.Auto"
+                            TValue="DateTime?"
+                            @bind-Value="@AtividadeViewModel.Data"
+                            Placeholder="Data"
+                            CalendarMode="CalendarType.Gregorian"/>
+                        <ValidationMessage
+                            For="@(() => AtividadeViewModel.Data)"/>
+
+                        <SfComboBox
+                            FloatLabelType="FloatLabelType.Auto"
+                            @bind-Value="@AtividadeViewModel.Tipo"
+                            TItem="AtividadeTipo"
+                            TValue="TipoAtividade"
+                            Placeholder="Selecione o tipo"
+                            DataSource="@AtividadeListaTipos" >
+
+                            <ComboBoxFieldSettings
+                                Value="Id"
+                                Text="Descricao" >
+                            </ComboBoxFieldSettings>
+                        </SfComboBox>
+
+                        <ValidationMessage
+                            For="@(() => AtividadeViewModel.Tipo)"/>
+
+                        <SfTextBox
+                            Placeholder="Observação"
+                            FloatLabelType="FloatLabelType.Auto"
+                            @bind-Value="@AtividadeViewModel.Observacao"
+                            Multiline="true"/>
+
+                        <ValidationMessage
+                            For="@(() => AtividadeViewModel.Observacao)"/>
+                    </div>
+
+
+                    @if (_atividadeDisplayValidationErrorMessages)
+                    {
+                        <div
+                            class="col-md-4"
+                            style="margin-top:10px" >
+                            <label>Validation Messages: </label>
+                            <ValidationSummary/>
+                        </div>
+                    }
+
+                </EditForm>
+
+            </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton
+                Content="Cancelar"
+                CssClass="bfz-button bfz-secondary"
+                IsPrimary="false"
+                OnClick="@OnNovaAtividadeCancelarClicked"/>
+            <DialogButton
+                Content="Salvar"
+                CssClass="bfz-button bfz-primay"
+                IsPrimary="true"
+                OnClick="@OnNovaAtividadeSalvarClicked"/>
+        </DialogButtons>
+        <DialogAnimationSettings
+            Effect="@DialogEffect.None" >
+        </DialogAnimationSettings>
+
+    </SfDialog>
+}
+
 
 @if (ShowPlanejamentoModal)
 {
     <SfDialog
         Width="100%"
         Height="100%"
-        @ref="@SfDialogObj" >
+        @ref="@PlanejamentoSfDialogObj" >
         <DialogTemplates>
             <Header> Novo planejamento </Header>
             <Content>
@@ -166,18 +335,19 @@
                 <EditForm
 
                     EditContext="@PlanejamentoEditContext"
-                    OnValidSubmit="HandleValidSubmit"
-                    OnInvalidSubmit="OnInvalidSubmit" >
+                    OnValidSubmit="PlanejamentoHandleValidSubmit"
+                    OnInvalidSubmit="PlanejamentoOnInvalidSubmit" >
                     <DataAnnotationsValidator/>
                     <div
                         class="form-group" >
 
                         @if (LoteDeProducaoViewModel.Id != null)
                         {
-                            <SfTextBox
+                            <SfNumericTextBox
+                                TValue="int?"
                                 FloatLabelType="FloatLabelType.Auto"
                                 PlaceHolder="Código"
-                                @bind="@LoteDeProducaoViewModel.Id"
+                                @bind-Value="@LoteDeProducaoViewModel.Id"
                                 Enabled="false"/>
                             <ValidationMessage
                                 For="@(() => LoteDeProducaoViewModel.Id)"/>
@@ -186,7 +356,7 @@
                         <SfDatePicker
                             FloatLabelType="FloatLabelType.Auto"
                             TValue="DateTime?"
-                            @bind="@LoteDeProducaoViewModel.DataPlantio"
+                            @bind-Value="@LoteDeProducaoViewModel.DataPlantio"
                             Placeholder="Previsão de plantio"
                             CalendarMode="CalendarType.Gregorian"/>
                         <ValidationMessage
@@ -195,7 +365,7 @@
                         <SfDatePicker
                             FloatLabelType="FloatLabelType.Auto"
                             TValue="DateTime?"
-                            @bind="@LoteDeProducaoViewModel.DataEncerramento"
+                            @bind-Value="@LoteDeProducaoViewModel.DataEncerramento"
                             Placeholder="Previsão de encerramento"
                             CalendarMode="CalendarType.Gregorian"
                             Enabled="false"/>
@@ -232,7 +402,7 @@
                         <SfTextBox
                             Placeholder="Observação"
                             FloatLabelType="FloatLabelType.Auto"
-                            @bind="@LoteDeProducaoViewModel.Observacao"
+                            @bind-Value="@LoteDeProducaoViewModel.Observacao"
                             Multiline="true"
                             Enabled="@(LoteDeProducaoViewModel.DataEncerramento == null)"/>
 
@@ -241,7 +411,7 @@
                     </div>
 
 
-                    @if (_displayValidationErrorMessages)
+                    @if (_planejamentoDisplayValidationErrorMessages)
                     {
                         <div
                             class="col-md-4"

@@ -1,11 +1,9 @@
 ﻿using BFZ.AtividadeExtensionistaII.Domain.Models;
-using BFZ.AtividadeExtensionistaII.Pages.Producao;
-using BFZ.AtividadeExtensionistaII.PagesMaui;
-using BFZ.AtividadeExtensionistaII.Repositories;
 using BFZ.AtividadeExtensionistaII.Viewmodels;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Popups;
 
@@ -13,11 +11,14 @@ namespace BFZ.AtividadeExtensionistaII.Pages;
 
 public partial class Index
 {
-    private bool _displayValidationErrorMessages;
+    private bool _planejamentoDisplayValidationErrorMessages;
+    private bool _atividadeDisplayValidationErrorMessages;
 
     [Inject] private AuthenticationViewModel AuthenticationViewModel { get; set; }
 
     [Inject] private LoteDeProducaoViewModel LoteDeProducaoViewModel { get; set; }
+
+    [Inject] private AtividadeViewModel AtividadeViewModel { get; set; }
 
     [Inject] private ProdutoViewModel ProdutoViewModel { get; set; }
 
@@ -27,9 +28,26 @@ public partial class Index
 
     public bool ShowNovoPlanejamento { get; set; }
 
+    private bool _showNovaAtividadeModal;
+
+    public bool ShowNovaAtividadeModal
+    {
+        get => _showNovaAtividadeModal;
+        set
+        {
+            _showNovaAtividadeModal = value;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
     public bool ShowPlanejamentoModal { get; set; }
 
-    public SfDialog? SfDialogObj { get; set; }
+    public LoteDeProducao SelectedLote { get; set; }
+    public bool ShowAtividadesModal { get; set; }
+
+    public SfDialog? PlanejamentoSfDialogObj { get; set; }
+    public SfDialog? AtividadesSfDialogObj { get; set; }    
+    public SfDialog? NovaAtividadesSfDialogObj { get; set; }
 
     protected override async Task OnAfterRenderAsync(
         bool firstRender)
@@ -42,15 +60,47 @@ public partial class Index
             ListaProdutos = await ProdutoViewModel.GetAllAsync();
             ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
             PlanejamentoEditContext = new EditContext(LoteDeProducaoViewModel);
+
+            AtividadeListaTipos = new List<AtividadeTipo>
+            {
+                new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Plantio
+                    , Descricao = "Plantio"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Colheita
+                    , Descricao = "Colheita"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Doacao
+                    , Descricao = "Doação"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.AplicacaoDefensivo
+                    , Descricao = "Aplicação de defensivo"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Descarte
+                    , Descricao = "Descarte"
+                }
+            };
         }
 
         await base.OnAfterRenderAsync(firstRender);
     }
 
     public IEnumerable<LoteDeProducao> ListaLotes { get; set; }
+    public IEnumerable<Atividade> ListaAtividades { get; set; }
 
     public IEnumerable<Produto> ListaProdutos { get; set; }
+    public IEnumerable<AtividadeTipo> AtividadeListaTipos { get; set; }
     public EditContext PlanejamentoEditContext { get; set; }
+    public EditContext AtividadeEditContext { get; set; }
 
     private Task OnNovoPlanejamento()
     {
@@ -78,11 +128,11 @@ public partial class Index
     {
         if (!PlanejamentoEditContext.Validate())
         {
-            _displayValidationErrorMessages = true;
+            _planejamentoDisplayValidationErrorMessages = true;
         }
         else
         {
-            _displayValidationErrorMessages = false;
+            _planejamentoDisplayValidationErrorMessages = false;
 
             ShowPlanejamentoModal = false;
         }
@@ -90,20 +140,59 @@ public partial class Index
         return Task.CompletedTask;
     }
 
-
-    private Task HandleValidSubmit(
-        EditContext arg)
+    private Task OnNovaAtividadeCancelarClicked()
     {
-        _displayValidationErrorMessages = false;
+        ShowNovaAtividadeModal = false;
         return Task.CompletedTask;
     }
 
-    private Task OnInvalidSubmit(
-        EditContext arg)
+    private Task OnNovaAtividadeSalvarClicked()
     {
-        _displayValidationErrorMessages = true;
+        if (!AtividadeEditContext.Validate())
+        {
+            _atividadeDisplayValidationErrorMessages = true;
+        }
+        else
+        {
+            _atividadeDisplayValidationErrorMessages = false;
+
+            ShowNovaAtividadeModal = false;
+        }
+
         return Task.CompletedTask;
     }
+
+
+    private Task PlanejamentoHandleValidSubmit(
+        EditContext arg)
+    {
+        _planejamentoDisplayValidationErrorMessages = false;
+        return Task.CompletedTask;
+    }
+
+    private Task PlanejamentoOnInvalidSubmit(
+        EditContext arg)
+    {
+        _planejamentoDisplayValidationErrorMessages = true;
+        return Task.CompletedTask;
+    }
+
+
+    private Task AtividadeHandleValidSubmit(
+        EditContext arg)
+    {
+        _atividadeDisplayValidationErrorMessages = false;
+        ShowAtividadesModal = true;
+        return Task.CompletedTask;
+    }
+
+    private Task AtividadeOnInvalidSubmit(
+        EditContext arg)
+    {
+        _atividadeDisplayValidationErrorMessages = true;
+        return Task.CompletedTask;
+    }
+
     public void OnTabSelecting(
         SelectingEventArgs args)
     {
@@ -111,5 +200,32 @@ public partial class Index
         {
             args.Cancel = true;
         }
+    }
+
+    private async Task OnLoteProducaoSelected(
+        RowSelectEventArgs<LoteDeProducao> arg)
+    {
+        if (arg?.Data?.Id != null)
+        {
+            ShowAtividadesModal = true;
+            SelectedLote = arg.Data;
+
+            ListaAtividades = await AtividadeViewModel.GetAllByLoteAsync((int)SelectedLote.Id);
+        }
+    }
+
+    private Task OnAtividadesModalFecharClicked()
+    {
+        ShowAtividadesModal = false;
+        return Task.CompletedTask;
+    }
+
+    private async Task OnNovaAtividade()
+    {
+        ShowAtividadesModal = false;
+        await Task.Delay(100);
+        AtividadeEditContext = new EditContext(AtividadeViewModel);
+        ShowNovaAtividadeModal = true;
+        
     }
 }
