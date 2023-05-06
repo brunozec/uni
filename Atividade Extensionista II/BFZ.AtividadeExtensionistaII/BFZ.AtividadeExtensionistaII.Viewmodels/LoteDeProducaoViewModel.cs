@@ -37,12 +37,22 @@ public class LoteDeProducaoViewModel : BaseViewModel
         }
     }
 
+    private decimal? _quantidade;
+
     [Required(ErrorMessage = "Obrigatório informar a quantidade")]
-    public decimal Quantidade { get; set; }
+    public decimal? Quantidade
+    {
+        get => _quantidade;
+        set
+        {
+            if (value == _quantidade) return;
+            _quantidade = value;
+            OnPropertyChanged();
+        }
+    }
 
     private DateTime? _dataPlantio;
 
-    [Required(ErrorMessage = "Obrigatório a data de previsão do plantio")]
     public DateTime? DataPlantio
     {
         get => _dataPlantio;
@@ -50,6 +60,20 @@ public class LoteDeProducaoViewModel : BaseViewModel
         {
             if (Nullable.Equals(value, _dataPlantio)) return;
             _dataPlantio = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private DateTime? _dataPlanejado;
+
+    [Required(ErrorMessage = "Obrigatório a data de previsão do plantio")]
+    public DateTime? DataPlanejado
+    {
+        get => _dataPlanejado;
+        set
+        {
+            if (Nullable.Equals(value, _dataPlanejado)) return;
+            _dataPlanejado = value;
             OnPropertyChanged();
         }
     }
@@ -95,17 +119,17 @@ public class LoteDeProducaoViewModel : BaseViewModel
             Id = Id
             , IdProduto = IdProduto
             , Quantidade = Quantidade
-            , DataPlantio = DataPlantio
+            , DataPlanejado = DataPlanejado
             , DataEncerramento = DataEncerramento
             , Observacao = Observacao
         });
     }
 
-    public  async Task<IEnumerable<LoteDeProducao>> GetAllAsync()
+    public async Task<IEnumerable<LoteDeProducao>> GetAllAsync()
     {
         var produtos = await _produtoService.GetAll();
-        
-        var lotes= await _loteDeProducaoService.GetAll();
+
+        var lotes = await _loteDeProducaoService.GetAll();
 
         var loteDeProducaos = lotes as LoteDeProducao[] ?? lotes.ToArray();
 

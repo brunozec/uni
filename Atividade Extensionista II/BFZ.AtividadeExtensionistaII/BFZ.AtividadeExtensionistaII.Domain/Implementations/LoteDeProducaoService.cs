@@ -45,38 +45,44 @@ public class LoteDeProducaoService
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = DateTime.UtcNow.AddDays(r.Next(1, 45))
                 , IdProduto = produtos.First().Id
+                , Plantado = false
             });
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
                 , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
                 , IdProduto = produtos.Last().Id
+                , Plantado = true
             });
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
                 , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
                 , IdProduto = produtos.First().Id
+                , Plantado = true
             });
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
                 , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
                 , IdProduto = produtos.Last().Id
+                , Plantado = true
             });
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
                 , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
                 , IdProduto = produtos.First().Id
+                , Plantado = true
             });
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
                 , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
                 , IdProduto = produtos.Last().Id
+                , Plantado = true
             });
         }
     }

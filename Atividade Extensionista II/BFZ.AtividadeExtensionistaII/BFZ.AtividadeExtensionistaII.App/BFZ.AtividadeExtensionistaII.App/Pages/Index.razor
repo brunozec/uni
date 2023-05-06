@@ -105,22 +105,12 @@
                                 HeaderText="Código"
                                 AutoFit="true" >
                             </GridColumn>
-
-                            <GridColumn
-                                Format="dd/MM/yyyy"
-                                Field="@nameof(LoteDeProducao.DataPlanejado)"
-                                HeaderText="Planejado"
-                                Width="100px" >
-                            </GridColumn>
-
                             <GridColumn
                                 Format="dd/MM/yyyy"
                                 Field="@nameof(LoteDeProducao.DataPlantio)"
                                 HeaderText="Plantio"
                                 Width="100px" >
                             </GridColumn>
-
-
                             <GridColumn
                                 Field="@nameof(LoteDeProducao.DescricaoProduto)"
                                 HeaderText="Produto"
@@ -366,11 +356,11 @@
                         <SfDatePicker
                             FloatLabelType="FloatLabelType.Auto"
                             TValue="DateTime?"
-                            @bind-Value="@LoteDeProducaoViewModel.DataPlanejado"
+                            @bind-Value="@LoteDeProducaoViewModel.DataPlantio"
                             Placeholder="Previsão de plantio"
                             CalendarMode="CalendarType.Gregorian"/>
                         <ValidationMessage
-                            For="@(() => LoteDeProducaoViewModel.DataPlanejado)"/>
+                            For="@(() => LoteDeProducaoViewModel.DataPlantio)"/>
 
                         <SfDatePicker
                             FloatLabelType="FloatLabelType.Auto"
@@ -404,7 +394,7 @@
                             TValue="decimal?"
                             Placeholder="Quantidade"
                             FloatLabelType="FloatLabelType.Auto"
-                            @bind-Value="@LoteDeProducaoViewModel.Quantidade" >
+                            bind-Value="@LoteDeProducaoViewModel.Quantidade" >
                         </SfNumericTextBox>
                         <ValidationMessage
                             For="@(() => LoteDeProducaoViewModel.Quantidade)"/>
@@ -440,12 +430,12 @@
                 Content="Cancelar"
                 CssClass="bfz-button bfz-secondary"
                 IsPrimary="false"
-                OnClick="@OnPlanejamentoCancelarClicked"/>
+                OnClick="@OnCancelarClicked"/>
             <DialogButton
                 Content="Salvar"
                 CssClass="bfz-button bfz-primay"
                 IsPrimary="true"
-                OnClick="@OnPlanejamentoSalvarClicked"/>
+                OnClick="@OnSalvarClicked"/>
         </DialogButtons>
         <DialogAnimationSettings
             Effect="@DialogEffect.None" >

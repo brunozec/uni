@@ -1,14 +1,10 @@
-﻿using BFZ.AtividadeExtensionistaII.Domain.Implementations;
-using BFZ.AtividadeExtensionistaII.Domain.Models;
+﻿using BFZ.AtividadeExtensionistaII.Domain.Models;
 using BFZ.AtividadeExtensionistaII.Viewmodels;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.Navigations;
-using Syncfusion.Blazor.Popups;
 
-namespace BFZ.AtividadeExtensionistaII.Pages;
+namespace BFZ.AtividadeExtensionistaII.App.Pages;
 
 public partial class Index
 {
@@ -47,7 +43,7 @@ public partial class Index
     public bool ShowAtividadesModal { get; set; }
 
     public SfDialog? PlanejamentoSfDialogObj { get; set; }
-    public SfDialog? AtividadesSfDialogObj { get; set; }
+    public SfDialog? AtividadesSfDialogObj { get; set; }    
     public SfDialog? NovaAtividadesSfDialogObj { get; set; }
 
     protected override async Task OnAfterRenderAsync(
@@ -62,76 +58,50 @@ public partial class Index
             ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
             PlanejamentoEditContext = new EditContext(LoteDeProducaoViewModel);
 
-            PopulateAtividadeListaTipos(true, true);
+            AtividadeListaTipos = new List<AtividadeTipo>
+            {
+                new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Plantio
+                    , Descricao = "Plantio"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Colheita
+                    , Descricao = "Colheita"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Doacao
+                    , Descricao = "Doação"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.AplicacaoDefensivo
+                    , Descricao = "Aplicação de defensivo"
+                }
+                , new AtividadeTipo
+                {
+                    Id = (int)TipoAtividade.Descarte
+                    , Descricao = "Descarte"
+                }
+            };
         }
 
         await base.OnAfterRenderAsync(firstRender);
-    }
-
-    private void PopulateAtividadeListaTipos(
-        bool addPlantio
-        , bool addDescarte)
-    {
-        AtividadeListaTipos = new List<AtividadeTipo>();
-
-        if (addPlantio)
-            AtividadeListaTipos.Add(new AtividadeTipo
-                {
-                    Id = TipoAtividade.Plantio
-                    , Descricao = "Plantio"
-                }
-            );
-
-        if (!addPlantio)
-            AtividadeListaTipos.Add(new AtividadeTipo
-                {
-                    Id = TipoAtividade.Colheita
-                    , Descricao = "Colheita"
-                }
-            );
-
-        if (!addPlantio)
-            AtividadeListaTipos.Add(new AtividadeTipo
-                {
-                    Id = TipoAtividade.Doacao
-                    , Descricao = "Doação"
-                }
-            );
-
-        if (!addPlantio)
-            AtividadeListaTipos.Add(new AtividadeTipo
-                {
-                    Id = TipoAtividade.AplicacaoDefensivo
-                    , Descricao = "Aplicação de defensivo"
-                }
-            );
-
-        if (!addPlantio && addDescarte)
-            AtividadeListaTipos.Add(new AtividadeTipo
-                {
-                    Id = TipoAtividade.Descarte
-                    , Descricao = "Descarte"
-                }
-            );
     }
 
     public IEnumerable<LoteDeProducao> ListaLotes { get; set; }
     public IEnumerable<Atividade> ListaAtividades { get; set; }
 
     public IEnumerable<Produto> ListaProdutos { get; set; }
-    public IList<AtividadeTipo> AtividadeListaTipos { get; set; }
+    public IEnumerable<AtividadeTipo> AtividadeListaTipos { get; set; }
     public EditContext PlanejamentoEditContext { get; set; }
     public EditContext AtividadeEditContext { get; set; }
 
     private Task OnNovoPlanejamento()
     {
         PlanejamentoEditContext = new EditContext(LoteDeProducaoViewModel);
-
-        LoteDeProducaoViewModel.DataPlanejado = DateTime.Now;
-        LoteDeProducaoViewModel.Quantidade = 0;
-        LoteDeProducaoViewModel.Observacao = string.Empty;
-        LoteDeProducaoViewModel.IdProduto = null;
-
         ShowPlanejamentoModal = true;
 
         return Task.CompletedTask;
@@ -145,13 +115,13 @@ public partial class Index
         return Task.CompletedTask;
     }
 
-    private Task OnPlanejamentoCancelarClicked()
+    private Task OnCancelarClicked()
     {
         ShowPlanejamentoModal = false;
         return Task.CompletedTask;
     }
 
-    private async Task OnPlanejamentoSalvarClicked()
+    private Task OnSalvarClicked()
     {
         if (!PlanejamentoEditContext.Validate())
         {
@@ -161,10 +131,10 @@ public partial class Index
         {
             _planejamentoDisplayValidationErrorMessages = false;
 
-            await LoteDeProducaoViewModel.SaveAsync();
-            ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
             ShowPlanejamentoModal = false;
         }
+
+        return Task.CompletedTask;
     }
 
     private Task OnNovaAtividadeCancelarClicked()
@@ -173,7 +143,7 @@ public partial class Index
         return Task.CompletedTask;
     }
 
-    private async Task OnNovaAtividadeSalvarClicked()
+    private Task OnNovaAtividadeSalvarClicked()
     {
         if (!AtividadeEditContext.Validate())
         {
@@ -183,13 +153,10 @@ public partial class Index
         {
             _atividadeDisplayValidationErrorMessages = false;
 
-            await AtividadeViewModel.SaveAsync();
-
             ShowNovaAtividadeModal = false;
-            ListaAtividades = await AtividadeViewModel.GetAllByLoteAsync((int)SelectedLote.Id);
-            ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
-            ShowAtividadesModal = true;
         }
+
+        return Task.CompletedTask;
     }
 
 
@@ -253,17 +220,9 @@ public partial class Index
     private async Task OnNovaAtividade()
     {
         ShowAtividadesModal = false;
-
+        await Task.Delay(100);
         AtividadeEditContext = new EditContext(AtividadeViewModel);
-        AtividadeViewModel.LoteId = (int)SelectedLote.Id;
-
-        AtividadeViewModel.Data = SelectedLote.Plantado ? DateTime.Now : SelectedLote.DataPlanejado;
-
-        AtividadeViewModel.Observacao = string.Empty;
-        AtividadeViewModel.Tipo = SelectedLote.Plantado ? TipoAtividade.Doacao : TipoAtividade.Plantio;
-
-        PopulateAtividadeListaTipos(!SelectedLote.Plantado, SelectedLote.Plantado && SelectedLote.DataDescarte == null);
-
         ShowNovaAtividadeModal = true;
+        
     }
 }

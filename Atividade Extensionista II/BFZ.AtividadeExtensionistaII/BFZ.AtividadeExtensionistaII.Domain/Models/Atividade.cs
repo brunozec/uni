@@ -60,7 +60,7 @@ public class Atividade : IEntityId
 
 public class AtividadeTipo
 {
-    public int Id { get; set; }
+    public TipoAtividade Id { get; set; }
 
     public string Descricao { get; set; }
 }

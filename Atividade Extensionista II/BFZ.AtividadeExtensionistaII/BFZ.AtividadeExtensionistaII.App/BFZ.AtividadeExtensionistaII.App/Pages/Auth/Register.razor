@@ -1,0 +1,35 @@
+﻿@page "/register"
+@using BFZ.AtividadeExtensionistaII.Domain.Models
+
+
+<PageTitle>Registrar</PageTitle>
+
+
+@if (AuthenticationViewModel.IsBusy)
+{
+    <SfSpinner
+        @bind-Visible="@AuthenticationViewModel.IsBusy"
+        Label="Carregando, aguarde..."
+        Size="40" >
+    </SfSpinner>
+}
+else
+{
+    <div
+        style="height: 100vh; " >
+        <SfButton
+            CssClass="registrar-button"
+            Content="Sou produtor"
+            IconCss="bx bx-leaf"
+            IconPosition="IconPosition.Top"
+            IsPrimary="true"
+            @onclick="@(() => OnClick(TipoUnidadeDeNegocio.Agricultor))"/>
+        <SfButton
+            CssClass="registrar-button"
+            Content="Represento uma entidade de caridade"
+            IconCss="bx bx-user"
+            IconPosition="IconPosition.Top"
+            IsPrimary="true"
+            @onclick="@(() => OnClick(TipoUnidadeDeNegocio.EntidadeCaridade))"/>
+    </div>
+}

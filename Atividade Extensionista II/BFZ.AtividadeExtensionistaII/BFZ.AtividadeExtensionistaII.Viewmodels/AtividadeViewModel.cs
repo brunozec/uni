@@ -8,6 +8,7 @@ namespace BFZ.AtividadeExtensionistaII.Viewmodels;
 public class AtividadeViewModel : BaseViewModel
 {
     private readonly AtividadeService _atividadeService;
+    private readonly LoteDeProducaoService _loteDeProducaoService;
     private int? _id;
 
     public int? Id
@@ -34,7 +35,7 @@ public class AtividadeViewModel : BaseViewModel
         }
     }
 
-    private DateTime? _data;
+    private DateTime? _data = DateTime.Now;
 
     [Required(ErrorMessage = "Obrigatório informar a data da atividade")]
     public DateTime? Data
@@ -76,14 +77,31 @@ public class AtividadeViewModel : BaseViewModel
     }
 
     public AtividadeViewModel(
-        AtividadeService atividadeService)
+        AtividadeService atividadeService
+        , LoteDeProducaoService loteDeProducaoService)
     {
         _atividadeService = atividadeService;
+        _loteDeProducaoService = loteDeProducaoService;
     }
 
 
     public async Task<Atividade> SaveAsync()
     {
+        var lote = await _loteDeProducaoService.Get(LoteId);
+
+        if (Tipo == TipoAtividade.Plantio)
+        {
+            lote.DataPlantio = Data;
+            lote.Plantado = true;
+            await _loteDeProducaoService.Save(lote);
+        }
+
+        if (Tipo == TipoAtividade.Descarte)
+        {
+            lote.DataDescarte = Data;
+            await _loteDeProducaoService.Save(lote);
+        }
+
         return await _atividadeService.Save(new Atividade
         {
             Id = Id

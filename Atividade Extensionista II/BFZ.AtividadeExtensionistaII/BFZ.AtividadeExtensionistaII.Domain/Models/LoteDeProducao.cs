@@ -26,11 +26,13 @@ public class LoteDeProducao: IEntityId
     /// <summary>
     /// Quantidade (unidades) do produto 
     /// </summary>
-    public decimal Quantidade { get; set; }
+    public decimal? Quantidade { get; set; }
 
     /// <summary>
     /// Data de plantio do produto
     /// </summary>
+    public DateTime? DataPlanejado { get; set; }
+    
     public DateTime? DataPlantio { get; set; }
 
     /// <summary>
@@ -42,4 +44,8 @@ public class LoteDeProducao: IEntityId
     /// Observações
     /// </summary>
     public string? Observacao { get; set; }
+    
+    public bool Plantado { get; set; }
+    
+    public DateTime? DataDescarte { get; set; }
 }

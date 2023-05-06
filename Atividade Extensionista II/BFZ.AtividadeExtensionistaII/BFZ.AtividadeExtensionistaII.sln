@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFZ.AtividadeExtensionistaI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFZ.AtividadeExtensionistaII.Viewmodels", "BFZ.AtividadeExtensionistaII.Viewmodels\BFZ.AtividadeExtensionistaII.Viewmodels.csproj", "{ADEFEB6C-A386-4629-A1EA-3322A8B89885}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFZ.AtividadeExtensionistaII.App", "BFZ.AtividadeExtensionistaII.App\BFZ.AtividadeExtensionistaII.App\BFZ.AtividadeExtensionistaII.App.csproj", "{2D3617E1-BF2D-49BA-B01D-01E11CF6CE38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{ADEFEB6C-A386-4629-A1EA-3322A8B89885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADEFEB6C-A386-4629-A1EA-3322A8B89885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADEFEB6C-A386-4629-A1EA-3322A8B89885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D3617E1-BF2D-49BA-B01D-01E11CF6CE38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D3617E1-BF2D-49BA-B01D-01E11CF6CE38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D3617E1-BF2D-49BA-B01D-01E11CF6CE38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D3617E1-BF2D-49BA-B01D-01E11CF6CE38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
