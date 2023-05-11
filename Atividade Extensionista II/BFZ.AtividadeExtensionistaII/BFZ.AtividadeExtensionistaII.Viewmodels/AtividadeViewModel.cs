@@ -2,6 +2,7 @@
 using BFZ.AtividadeExtensionistaII.Domain.Implementations;
 using BFZ.AtividadeExtensionistaII.Domain.Models;
 using BFZ.AtividadeExtensionistaII.Viewmodels.Implementations;
+using Force.DeepCloner;
 
 namespace BFZ.AtividadeExtensionistaII.Viewmodels;
 
@@ -9,6 +10,7 @@ public class AtividadeViewModel : BaseViewModel
 {
     private readonly AtividadeService _atividadeService;
     private readonly LoteDeProducaoService _loteDeProducaoService;
+    private readonly UnidadeDeNegocioService _unidadeDeNegocioService;
     private int? _id;
 
     public int? Id
@@ -76,12 +78,53 @@ public class AtividadeViewModel : BaseViewModel
         }
     }
 
+    private decimal? _quantidade;
+
+    public decimal? Quantidade
+    {
+        get => _quantidade;
+        set
+        {
+            if (value == _quantidade) return;
+            _quantidade = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int? _idEntidade;
+
+    public int? IdEntidade
+    {
+        get => _idEntidade;
+        set
+        {
+            if (value == _idEntidade) return;
+            _idEntidade = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string? _nomeEntidade;
+
+    public string? NomeEntidade
+    {
+        get => _nomeEntidade;
+        set
+        {
+            if (value == _nomeEntidade) return;
+            _nomeEntidade = value;
+            OnPropertyChanged();
+        }
+    }
+
     public AtividadeViewModel(
         AtividadeService atividadeService
-        , LoteDeProducaoService loteDeProducaoService)
+        , LoteDeProducaoService loteDeProducaoService
+        , UnidadeDeNegocioService unidadeDeNegocioService)
     {
         _atividadeService = atividadeService;
         _loteDeProducaoService = loteDeProducaoService;
+        _unidadeDeNegocioService = unidadeDeNegocioService;
     }
 
 
@@ -89,23 +132,63 @@ public class AtividadeViewModel : BaseViewModel
     {
         var lote = await _loteDeProducaoService.Get(LoteId);
 
+        var dividir = Quantidade != lote.Quantidade;
+
+        if (dividir)
+        {
+            lote.Quantidade = Math.Abs((Quantidade ?? 0) - (decimal)lote.Quantidade);
+            await _loteDeProducaoService.Save(lote);
+        }
+
+        var loteCloned = lote.DeepClone();
+
+        if (dividir)
+        {
+            loteCloned.Id = null;
+            loteCloned.Quantidade = Quantidade;
+        }
+
         if (Tipo == TipoAtividade.Plantio)
         {
             lote.DataPlantio = Data;
             lote.Plantado = true;
-            await _loteDeProducaoService.Save(lote);
+            lote.Situacao = Situacao.EmProducao;
         }
-
+        
         if (Tipo == TipoAtividade.Descarte)
         {
-            lote.DataDescarte = Data;
-            await _loteDeProducaoService.Save(lote);
+            loteCloned.DataEncerramento = Data;
+            loteCloned.Situacao = Situacao.Descartado;
+        }
+
+        if (Tipo == TipoAtividade.Colheita)
+        {
+            loteCloned.DataEncerramento = Data;
+            loteCloned.Situacao = Situacao.Colhido;
+        }
+
+        if (Tipo == TipoAtividade.Doacao)
+        {
+            loteCloned.DataEncerramento = Data;
+            loteCloned.Situacao = Situacao.Doado;
+        }
+
+        await _loteDeProducaoService.Save(loteCloned);
+
+        if (IdEntidade != null)
+        {
+            var empresa = await _unidadeDeNegocioService.Get((int)IdEntidade);
+
+            NomeEntidade = empresa.Nome;
         }
 
         return await _atividadeService.Save(new Atividade
         {
             Id = Id
+            , Quantidade = Quantidade
             , Observacao = Observacao
+            , IdEntidade = IdEntidade
+            , NomeEntidade = NomeEntidade
             , Data = Data
             , Tipo = Tipo
             , LoteId = LoteId
@@ -116,5 +199,10 @@ public class AtividadeViewModel : BaseViewModel
         int loteId)
     {
         return await _atividadeService.GetAllByLote(loteId);
+    }
+
+    public async Task<IEnumerable<Atividade>> GetAllDoacoesAsync()
+    {
+        return await _atividadeService.GetAllDoacoesAsync();
     }
 }

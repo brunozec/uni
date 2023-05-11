@@ -2,17 +2,16 @@
 @using BFZ.AtividadeExtensionistaII.Domain.Models
 @using AnimationEffect = Syncfusion.Blazor.AnimationEffect
 
-@if (ShowNovoPlanejamento)
-{
-    <div
-        style="padding-top: 30px" >
-        <SfButton
-            CssClass="bfz-button bfz-btn-novo-planejamento"
-            Content="Novo planejamento"
-            IsPrimary="true"
-            @onclick="@OnNovoPlanejamento"/>
-    </div>
-}
+
+<div
+    style="padding-top: 30px; padding-right: 5px;padding-left: 5px" >
+    <SfButton
+        CssClass="bfz-button-w-100 bfz-btn-novo-planejamento"
+        Content="Novo planejamento"
+        IsPrimary="true"
+        @onclick="@OnNovoPlanejamento"/>
+</div>
+
 
 <div
     style="padding-top: 30px; height: 100% !important" >
@@ -31,55 +30,13 @@
             </TabAnimationNext>
         </TabAnimationSettings>
         <TabEvents
+            Created="@OnTabCreated"
             Selecting="OnTabSelecting"
 
             Selected="@OnTabSelected" >
 
         </TabEvents>
         <TabItems>
-            <TabItem>
-                <ChildContent>
-                    <TabHeader
-                        IconCss="bx bx-donate-heart"
-                        IconPosition="left"
-                        Text="Doações" >
-                    </TabHeader>
-                </ChildContent>
-                <ContentTemplate>
-
-                    <SfGrid
-                        Width="100%"
-                        Height="100%"
-                        TValue="Atividade" >
-                        <GridColumns>
-                            <GridColumn
-                                Field="@nameof(Atividade.Id)"
-                                HeaderText="Código"
-                                AutoFit="true"
-                                Visible="false" >
-                            </GridColumn>
-                            <GridColumn
-                                Format="dd/MM/yyyy"
-                                Field="@nameof(Atividade.Data)"
-                                HeaderText="Data"
-                                AutoFit="true" >
-                            </GridColumn>
-                            <GridColumn
-                                Field="@nameof(Atividade.Observacao)"
-                                HeaderText="Data"
-                                AutoFit="true" >
-                            </GridColumn>
-                        </GridColumns>
-                        <GridTemplates>
-                            <EmptyRecordTemplate>
-                                <span>Nenhum item econtrado</span>
-                            </EmptyRecordTemplate>
-                        </GridTemplates>
-                    </SfGrid>
-
-                </ContentTemplate>
-
-            </TabItem>
             <TabItem>
                 <ChildContent>
                     <TabHeader
@@ -103,6 +60,27 @@
                             <GridColumn
                                 Field="@nameof(LoteDeProducao.Id)"
                                 HeaderText="Código"
+                                AutoFit="true"
+                                Visible="false" >
+                            </GridColumn>
+
+
+                            <GridColumn
+                                Field="@nameof(LoteDeProducao.DescricaoProduto)"
+                                HeaderText="Produto"
+                                AutoFit="true" >
+                            </GridColumn>
+
+                            <GridColumn
+                                Format="N0"
+                                Field="@nameof(LoteDeProducao.Quantidade)"
+                                HeaderText="Quantidade"
+                                AutoFit="true" >
+                            </GridColumn>
+
+                            <GridColumn
+                                Field="@nameof(LoteDeProducao.SituacaoDescricao)"
+                                HeaderText="Situação"
                                 AutoFit="true" >
                             </GridColumn>
 
@@ -120,19 +98,6 @@
                                 Width="100px" >
                             </GridColumn>
 
-
-                            <GridColumn
-                                Field="@nameof(LoteDeProducao.DescricaoProduto)"
-                                HeaderText="Produto"
-                                AutoFit="true" >
-                            </GridColumn>
-
-                            <GridColumn
-                                Format="N0"
-                                Field="@nameof(LoteDeProducao.Quantidade)"
-                                HeaderText="Quantidade"
-                                AutoFit="true" >
-                            </GridColumn>
                             <GridColumn
                                 Format="dd/MM/yyyy"
                                 Field="@nameof(LoteDeProducao.DataEncerramento)"
@@ -149,6 +114,60 @@
 
                 </ContentTemplate>
             </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader
+                        IconCss="bx bx-donate-heart"
+                        IconPosition="left"
+                        Text="Doações" >
+                    </TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+
+                    <SfGrid
+                        Width="100%"
+                        Height="100%"
+                        TValue="Atividade"
+                        DataSource="@ListaDoacoes" >
+                        <GridColumns>
+                            <GridColumn
+                                Field="@nameof(Atividade.Id)"
+                                HeaderText="Código"
+                                AutoFit="true"
+                                Visible="false" >
+                            </GridColumn>
+
+                            <GridColumn
+                                Format="N0"
+                                Field="@nameof(Atividade.Quantidade)"
+                                HeaderText="Quantidade"
+                                AutoFit="true" >
+                            </GridColumn>
+
+                            <GridColumn
+                                Format="N0"
+                                Field="@nameof(Atividade.NomeEntidade)"
+                                HeaderText="Entidade"
+                                AutoFit="true" >
+                            </GridColumn>
+
+                            <GridColumn
+                                Format="dd/MM/yyyy"
+                                Field="@nameof(Atividade.Data)"
+                                HeaderText="Data"
+                                Width="100px" >
+                            </GridColumn>
+                        </GridColumns>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <span>Nenhum item econtrado</span>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                    </SfGrid>
+
+                </ContentTemplate>
+
+            </TabItem>
         </TabItems>
     </SfTab>
 </div>
@@ -157,6 +176,7 @@
 @if (ShowAtividadesModal)
 {
     <SfDialog
+        
         Width="100%"
         Height="100%"
         @ref="@AtividadesSfDialogObj" >
@@ -164,15 +184,17 @@
             <Header>
 
 
-                <div
-                    style="padding-top: 30px" >
-                    <SfButton
-                        CssClass="bfz-button bfz-btn-novo-planejamento "
-                        Content="Nova atividade"
-                        IsPrimary="true"
-                        @onclick="@OnNovaAtividade"/>
-                </div>
-
+                @if (SelectedLote.Situacao is Situacao.EmProducao)
+                {
+                    <div
+                        style="padding-top: 30px" >
+                        <SfButton
+                            CssClass="bfz-button bfz-btn-novo-planejamento "
+                            Content="Nova atividade"
+                            IsPrimary="true"
+                            @onclick="@OnNovaAtividade"/>
+                    </div>
+                }
                 <div
                     style="padding-top: 30px" >
                     Atividades
@@ -231,6 +253,7 @@
 @if (ShowNovaAtividadeModal)
 {
     <SfDialog
+        
         Width="100%"
         Height="100%"
         @ref="@NovaAtividadesSfDialogObj" >
@@ -283,6 +306,39 @@
                             </ComboBoxFieldSettings>
                         </SfComboBox>
 
+                        @if (AtividadeViewModel.Tipo is TipoAtividade.Doacao)
+                        {
+                            <SfComboBox
+                                FloatLabelType="FloatLabelType.Auto"
+                                @bind-Value="@AtividadeViewModel.IdEntidade"
+                                TItem="UnidadeDeNegocio"
+                                TValue="int?"
+                                Placeholder="Selecione uma entidade"
+                                DataSource="@ListaEntidades" >
+
+                                <ComboBoxFieldSettings
+                                    Value="Id"
+                                    Text="Nome" >
+                                </ComboBoxFieldSettings>
+                            </SfComboBox>
+
+                            <ValidationMessage
+                                For="@(() => AtividadeViewModel.IdEntidade)"/>
+                        }
+
+                        @if (AtividadeViewModel.Tipo is TipoAtividade.Doacao or TipoAtividade.Colheita or TipoAtividade.Descarte)
+                        {
+                            <SfNumericTextBox
+                                TValue="decimal?"
+                                Placeholder="Quantidade"
+                                FloatLabelType="FloatLabelType.Auto"
+                                @bind-Value="@AtividadeViewModel.Quantidade"
+                                Max="@SelectedLote.Quantidade" >
+                            </SfNumericTextBox>
+                            <ValidationMessage
+                                For="@(() => AtividadeViewModel.Quantidade)"/>
+                        }
+
                         <ValidationMessage
                             For="@(() => AtividadeViewModel.Tipo)"/>
 
@@ -334,6 +390,7 @@
 @if (ShowPlanejamentoModal)
 {
     <SfDialog
+        
         Width="100%"
         Height="100%"
         @ref="@PlanejamentoSfDialogObj" >

@@ -104,6 +104,41 @@ public class LoteDeProducaoViewModel : BaseViewModel
         }
     }
 
+    private Situacao _situacao;
+
+    public Situacao Situacao
+    {
+        get => _situacao;
+        set
+        {
+            if (value == _situacao) return;
+            _situacao = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string SituacaoDescricao
+    {
+        get
+        {
+            switch (Situacao)
+            {
+                case Situacao.Planejado:
+                    return "Planejado";
+                case Situacao.EmProducao:
+                    return "Em produção";
+                case Situacao.Colhido:
+                    return "Colhido";
+                case Situacao.Doado:
+                    return "Doado";
+                case Situacao.Descartado:
+                    return "Descartado";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
     public LoteDeProducaoViewModel(
         LoteDeProducaoService loteDeProducaoService
         , ProdutoService produtoService)
@@ -122,6 +157,7 @@ public class LoteDeProducaoViewModel : BaseViewModel
             , DataPlanejado = DataPlanejado
             , DataEncerramento = DataEncerramento
             , Observacao = Observacao
+            ,Situacao = Situacao
         });
     }
 

@@ -38,4 +38,11 @@ public class AtividadeService
 
         return atividades.Where(w => w.LoteId.Equals(loteId));
     }
+
+    public async Task<IEnumerable<Atividade>> GetAllDoacoesAsync()
+    {
+        var atividades = await _repositoryBase.GetAllAsync();
+
+        return atividades.Where(w => w.Tipo == TipoAtividade.Doacao);
+    }
 }

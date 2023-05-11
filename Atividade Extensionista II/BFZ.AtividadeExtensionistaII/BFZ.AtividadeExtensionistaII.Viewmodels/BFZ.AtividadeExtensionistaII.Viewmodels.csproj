@@ -17,4 +17,8 @@
       <Folder Include="Abstractions\Auth\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="DeepCloner" Version="0.10.4" />
+    </ItemGroup>
+
 </Project>

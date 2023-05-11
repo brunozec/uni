@@ -47,5 +47,28 @@ public class LoteDeProducao: IEntityId
     
     public bool Plantado { get; set; }
     
-    public DateTime? DataDescarte { get; set; }
+    public Situacao Situacao { get; set; }
+    
+    [Ignore]
+    public string SituacaoDescricao
+    {
+        get
+        {
+            switch (Situacao)
+            {
+                case Situacao.Planejado:
+                    return "Planejado";
+                case Situacao.EmProducao:
+                    return "Em produção";
+                case Situacao.Colhido:
+                    return "Colhido";
+                case Situacao.Doado:
+                    return "Doado";
+                case Situacao.Descartado:
+                    return "Descartado";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
 }

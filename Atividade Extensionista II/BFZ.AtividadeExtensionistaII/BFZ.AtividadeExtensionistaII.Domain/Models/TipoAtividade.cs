@@ -2,9 +2,18 @@
 
 public enum TipoAtividade
 {
-    Plantio,
-    AplicacaoDefensivo,
-    Colheita,
-    Doacao,
-    Descarte
+    Plantio
+    , AplicacaoDefensivo
+    , Colheita
+    , Doacao
+    , Descarte
+}
+
+public enum Situacao
+{
+    Planejado
+    , EmProducao
+    , Colhido
+    , Doado
+    , Descartado
 }

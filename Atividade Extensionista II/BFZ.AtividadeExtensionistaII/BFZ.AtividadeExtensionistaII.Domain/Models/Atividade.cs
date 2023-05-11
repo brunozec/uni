@@ -24,6 +24,8 @@ public class Atividade : IEntityId
     /// Observação e dados adicionais
     /// </summary>
     public string Observacao { get; set; }
+    
+    public decimal? Quantidade { get; set; }
 
     /// <summary>
     /// Data de realização da atividade
@@ -56,6 +58,10 @@ public class Atividade : IEntityId
             };
         }
     }
+
+    public int? IdEntidade { get; set; }
+    
+    public string? NomeEntidade { get; set; }
 }
 
 public class AtividadeTipo

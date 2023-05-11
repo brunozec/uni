@@ -1,4 +1,5 @@
-﻿using BFZ.AtividadeExtensionistaII.Domain.Abstractions.UnidadesDeNegocios;
+﻿using System.Runtime.InteropServices.ComTypes;
+using BFZ.AtividadeExtensionistaII.Domain.Abstractions.UnidadesDeNegocios;
 using BFZ.AtividadeExtensionistaII.Domain.Models;
 
 namespace BFZ.AtividadeExtensionistaII.Domain.Implementations;
@@ -42,47 +43,67 @@ public class LoteDeProducaoService
 
         if (!lotes.Any())
         {
+            var d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlanejado = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = d
                 , IdProduto = produtos.First().Id
                 , Plantado = false
+                , Situacao = Situacao.Planejado
             });
+            d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = d
+                , DataPlantio = d
                 , IdProduto = produtos.Last().Id
                 , Plantado = true
+                , Situacao = Situacao.EmProducao
             });
+            d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = d
+                , DataPlantio = d
                 , IdProduto = produtos.First().Id
                 , Plantado = true
+                , Situacao = Situacao.EmProducao
             });
+            d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = d
+                , DataPlantio = d
+                , DataEncerramento = d.AddDays(45)
                 , IdProduto = produtos.Last().Id
                 , Plantado = true
+                , Situacao = Situacao.Colhido
             });
+            d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = d
+                , DataPlantio = d
+                , DataEncerramento = d.AddDays(45)
                 , IdProduto = produtos.First().Id
                 , Plantado = true
+                , Situacao = Situacao.Colhido
             });
+            d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
             {
                 Quantidade = r.Next(100, 9999)
-                , DataPlantio = DateTime.UtcNow.AddDays(r.Next(1, 45))
+                , DataPlanejado = d
+                , DataPlantio = d
                 , IdProduto = produtos.Last().Id
                 , Plantado = true
+                , DataEncerramento = d.AddDays(7)
+                , Situacao = Situacao.Descartado
             });
         }
     }

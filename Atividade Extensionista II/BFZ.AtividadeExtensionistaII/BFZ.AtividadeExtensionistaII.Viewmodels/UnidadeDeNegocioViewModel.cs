@@ -156,4 +156,14 @@ public class UnidadeDeNegocioViewModel : BaseViewModel
             , EnderecoNumero = EnderecoNumero
         });
     }
+
+    public async Task<IEnumerable<UnidadeDeNegocio>> GetAllEntidadesAsync()
+    {
+        return await _unidadeDeNegocioService.GetAllEntidadesAsync();
+    }
+
+    public  Task AddDefaultAsync()
+    {
+        return _unidadeDeNegocioService.AddDefaultAsync();
+    }
 }

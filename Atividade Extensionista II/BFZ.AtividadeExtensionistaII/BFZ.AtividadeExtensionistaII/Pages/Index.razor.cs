@@ -22,12 +22,13 @@ public partial class Index
     [Inject] private AtividadeViewModel AtividadeViewModel { get; set; }
 
     [Inject] private ProdutoViewModel ProdutoViewModel { get; set; }
+    [Inject] private UnidadeDeNegocioViewModel UnidadeDeNegocioViewModel { get; set; }
 
     [Inject] private NavigationManager NavigationManager { get; set; }
 
     public SfTab? SfTabObj { get; set; }
 
-    public bool ShowNovoPlanejamento { get; set; }
+    public bool ShowNovoPlanejamento { get; set; } = true;
 
     private bool _showNovaAtividadeModal;
 
@@ -53,17 +54,7 @@ public partial class Index
     protected override async Task OnAfterRenderAsync(
         bool firstRender)
     {
-        if (firstRender)
-        {
-            await ProdutoViewModel.AddDefaultAsync();
-            await LoteDeProducaoViewModel.AddDefaultAsync();
-
-            ListaProdutos = await ProdutoViewModel.GetAllAsync();
-            ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
-            PlanejamentoEditContext = new EditContext(LoteDeProducaoViewModel);
-
-            PopulateAtividadeListaTipos(true, true);
-        }
+        if (firstRender) { }
 
         await base.OnAfterRenderAsync(firstRender);
     }
@@ -115,10 +106,12 @@ public partial class Index
             );
     }
 
+    public IEnumerable<Atividade> ListaDoacoes { get; set; }
     public IEnumerable<LoteDeProducao> ListaLotes { get; set; }
     public IEnumerable<Atividade> ListaAtividades { get; set; }
 
     public IEnumerable<Produto> ListaProdutos { get; set; }
+    public IEnumerable<UnidadeDeNegocio> ListaEntidades { get; set; }
     public IList<AtividadeTipo> AtividadeListaTipos { get; set; }
     public EditContext PlanejamentoEditContext { get; set; }
     public EditContext AtividadeEditContext { get; set; }
@@ -137,12 +130,12 @@ public partial class Index
         return Task.CompletedTask;
     }
 
-    private Task OnTabSelected(
+    private async Task OnTabSelected(
         SelectEventArgs arg)
     {
-        ShowNovoPlanejamento = arg.SelectedIndex == 1;
+        ShowNovoPlanejamento = arg.SelectedIndex == 0;
 
-        return Task.CompletedTask;
+        await PopulateLists();
     }
 
     private Task OnPlanejamentoCancelarClicked()
@@ -162,7 +155,7 @@ public partial class Index
             _planejamentoDisplayValidationErrorMessages = false;
 
             await LoteDeProducaoViewModel.SaveAsync();
-            ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
+            await PopulateLists();
             ShowPlanejamentoModal = false;
         }
     }
@@ -188,6 +181,7 @@ public partial class Index
             ShowNovaAtividadeModal = false;
             ListaAtividades = await AtividadeViewModel.GetAllByLoteAsync((int)SelectedLote.Id);
             ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
+            await PopulateLists();
             ShowAtividadesModal = true;
         }
     }
@@ -250,7 +244,7 @@ public partial class Index
         return Task.CompletedTask;
     }
 
-    private async Task OnNovaAtividade()
+    private Task OnNovaAtividade()
     {
         ShowAtividadesModal = false;
 
@@ -261,9 +255,32 @@ public partial class Index
 
         AtividadeViewModel.Observacao = string.Empty;
         AtividadeViewModel.Tipo = SelectedLote.Plantado ? TipoAtividade.Doacao : TipoAtividade.Plantio;
+        AtividadeViewModel.Quantidade = SelectedLote.Quantidade;
 
-        PopulateAtividadeListaTipos(!SelectedLote.Plantado, SelectedLote.Plantado && SelectedLote.DataDescarte == null);
+        PopulateAtividadeListaTipos(SelectedLote.Situacao is Situacao.Planejado, SelectedLote.Situacao is Situacao.EmProducao);
 
         ShowNovaAtividadeModal = true;
+        return Task.CompletedTask;
+    }
+
+    private async Task OnTabCreated()
+    {
+        await PopulateLists();
+    }
+
+    private async Task PopulateLists()
+    {
+        await ProdutoViewModel.AddDefaultAsync();
+        await LoteDeProducaoViewModel.AddDefaultAsync();
+        await UnidadeDeNegocioViewModel.AddDefaultAsync();
+
+        ListaEntidades = await UnidadeDeNegocioViewModel.GetAllEntidadesAsync();
+        ListaProdutos = await ProdutoViewModel.GetAllAsync();
+        ListaLotes = await LoteDeProducaoViewModel.GetAllAsync();
+        PlanejamentoEditContext = new EditContext(LoteDeProducaoViewModel);
+
+        ListaDoacoes = await AtividadeViewModel.GetAllDoacoesAsync();
+
+        PopulateAtividadeListaTipos(true, true);
     }
 }
