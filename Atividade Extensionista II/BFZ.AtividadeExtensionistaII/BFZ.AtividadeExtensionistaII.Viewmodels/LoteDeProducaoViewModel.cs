@@ -139,6 +139,19 @@ public class LoteDeProducaoViewModel : BaseViewModel
         }
     }
 
+    private int? _idEmpresa;
+
+    public int? IdEmpresa
+    {
+        get => _idEmpresa;
+        set
+        {
+            if (value == _idEmpresa) return;
+            _idEmpresa = value;
+            OnPropertyChanged();
+        }
+    }
+
     public LoteDeProducaoViewModel(
         LoteDeProducaoService loteDeProducaoService
         , ProdutoService produtoService)
@@ -157,7 +170,8 @@ public class LoteDeProducaoViewModel : BaseViewModel
             , DataPlanejado = DataPlanejado
             , DataEncerramento = DataEncerramento
             , Observacao = Observacao
-            ,Situacao = Situacao
+            , Situacao = Situacao
+            , IdEmpresa = IdEmpresa
         });
     }
 

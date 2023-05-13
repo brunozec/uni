@@ -8,9 +8,9 @@ public class AuthenticationViewModel : BaseViewModel
     private readonly IBaseRepository<UnidadeDeNegocio> _unidadeDeNegocioRepository;
     public AutenticationRequest AutenticationRequest { get; set; } = new AutenticationRequest();
 
-    private string _userEmail;
+    private string? _userEmail;
 
-    public string UserEmail
+    public string? UserEmail
     {
         get => _userEmail;
         set
@@ -22,9 +22,9 @@ public class AuthenticationViewModel : BaseViewModel
         }
     }
 
-    private int _userUnidadeDeNegocioId;
+    private int? _userUnidadeDeNegocioId;
 
-    public int UserUnidadeDeNegocioId
+    public int? UserUnidadeDeNegocioId
     {
         get => _userUnidadeDeNegocioId;
         set
@@ -35,9 +35,9 @@ public class AuthenticationViewModel : BaseViewModel
         }
     }
 
-    private TipoUnidadeDeNegocio _userTipoUnidadeDeNegocio;
+    private TipoUnidadeDeNegocio? _userTipoUnidadeDeNegocio;
 
-    public TipoUnidadeDeNegocio UserTipoUnidadeDeNegocio
+    public TipoUnidadeDeNegocio? UserTipoUnidadeDeNegocio
     {
         get => _userTipoUnidadeDeNegocio;
         set
@@ -59,34 +59,35 @@ public class AuthenticationViewModel : BaseViewModel
         _unidadeDeNegocioRepository = unidadeDeNegocioRepository;
     }
 
-    public async Task<bool> CheckLoggedUser()
+    public bool CheckLoggedUser()
     {
-        var empresas = await _unidadeDeNegocioRepository.GetAllAsync();
-
-        if (empresas.Any())
+        if (!string.IsNullOrWhiteSpace(UserEmail))
         {
-            var empresa = empresas.First();
-            UserEmail = empresa.Email;
-            UserUnidadeDeNegocioId = (int)empresa.Id;
-            UserTipoUnidadeDeNegocio = empresa.Tipo;
-
             return true;
         }
 
         return false;
     }
 
+    public void Logout()
+    {
+        UserEmail = null;
+        UserUnidadeDeNegocioId = null;
+        UserTipoUnidadeDeNegocio = null;
+    }
+
     public async Task<bool> Login()
     {
         var empresas = await _unidadeDeNegocioRepository.GetAllAsync();
 
-        if (empresas.Any())
+        foreach (var empresa in empresas)
         {
-            var empresa = empresas.First();
-
             if (empresa.Email.Equals(AutenticationRequest.Login, StringComparison.InvariantCultureIgnoreCase)
                 && empresa.Senha.Equals(AutenticationRequest.Senha, StringComparison.InvariantCultureIgnoreCase))
             {
+                UserEmail = empresa.Email;
+                UserUnidadeDeNegocioId = (int)empresa.Id;
+                UserTipoUnidadeDeNegocio = empresa.Tipo;
                 return true;
             }
         }

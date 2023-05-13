@@ -27,7 +27,7 @@ public class UnidadeDeNegocioService
 
     public async Task<IEnumerable<UnidadeDeNegocio>> GetAllEntidadesAsync()
     {
-        var empresas= await _repositoryBase.GetAllAsync();
+        var empresas = await _repositoryBase.GetAllAsync();
 
         return empresas.Where(w => w.Tipo is TipoUnidadeDeNegocio.EntidadeCaridade);
     }
@@ -36,17 +36,21 @@ public class UnidadeDeNegocioService
     {
         var empresas = await _repositoryBase.GetAllAsync();
 
-        if (!empresas.Any() || empresas.Count()==1)
+        if (!empresas.Any() || empresas.Count() == 1)
         {
             await Save(new UnidadeDeNegocio()
             {
                 Tipo = TipoUnidadeDeNegocio.EntidadeCaridade
                 , Nome = "FUNDAÇÃO LUZ DO DIA"
+                , Email = "fundacao@luzdodia.com.br"
+                , Senha = "1234"
             });
             await Save(new UnidadeDeNegocio
             {
                 Tipo = TipoUnidadeDeNegocio.EntidadeCaridade
                 , Nome = "SEMPRE MAIS AMOR"
+                , Email = "sempre@maisamor.com.br"
+                , Senha = "1234"
             });
             await Save(new UnidadeDeNegocio
             {
@@ -54,5 +58,10 @@ public class UnidadeDeNegocioService
                 , Nome = "ASSOCIAÇÃO DE MORADORES DO JARDIM..."
             });
         }
+    }
+
+    public async Task<IEnumerable<UnidadeDeNegocio>> GetAllAsync()
+    {
+        return await _repositoryBase.GetAllAsync();
     }
 }

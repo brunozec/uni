@@ -51,6 +51,7 @@ public class LoteDeProducaoService
                 , IdProduto = produtos.First().Id
                 , Plantado = false
                 , Situacao = Situacao.Planejado
+                , IdEmpresa = 1
             });
             d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
@@ -61,6 +62,7 @@ public class LoteDeProducaoService
                 , IdProduto = produtos.Last().Id
                 , Plantado = true
                 , Situacao = Situacao.EmProducao
+                , IdEmpresa = 1
             });
             d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
@@ -71,6 +73,7 @@ public class LoteDeProducaoService
                 , IdProduto = produtos.First().Id
                 , Plantado = true
                 , Situacao = Situacao.EmProducao
+                , IdEmpresa = 1
             });
             d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
@@ -82,6 +85,7 @@ public class LoteDeProducaoService
                 , IdProduto = produtos.Last().Id
                 , Plantado = true
                 , Situacao = Situacao.Colhido
+                , IdEmpresa = 1
             });
             d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
@@ -93,6 +97,7 @@ public class LoteDeProducaoService
                 , IdProduto = produtos.First().Id
                 , Plantado = true
                 , Situacao = Situacao.Colhido
+                , IdEmpresa = 1
             });
             d = DateTime.UtcNow.AddDays(r.Next(1, 45));
             await Save(new LoteDeProducao
@@ -104,6 +109,7 @@ public class LoteDeProducaoService
                 , Plantado = true
                 , DataEncerramento = d.AddDays(7)
                 , Situacao = Situacao.Descartado
+                , IdEmpresa = 1
             });
         }
     }

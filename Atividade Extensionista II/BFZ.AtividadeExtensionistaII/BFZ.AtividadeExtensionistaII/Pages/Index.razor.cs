@@ -49,6 +49,7 @@ public partial class Index
 
     public SfDialog? PlanejamentoSfDialogObj { get; set; }
     public SfDialog? AtividadesSfDialogObj { get; set; }
+    public SfDialog? DoacaoSfDialogObj { get; set; }
     public SfDialog? NovaAtividadesSfDialogObj { get; set; }
 
     protected override async Task OnAfterRenderAsync(
@@ -112,6 +113,7 @@ public partial class Index
 
     public IEnumerable<Produto> ListaProdutos { get; set; }
     public IEnumerable<UnidadeDeNegocio> ListaEntidades { get; set; }
+    public IEnumerable<UnidadeDeNegocio> ListaEmpresas { get; set; }
     public IList<AtividadeTipo> AtividadeListaTipos { get; set; }
     public EditContext PlanejamentoEditContext { get; set; }
     public EditContext AtividadeEditContext { get; set; }
@@ -154,6 +156,7 @@ public partial class Index
         {
             _planejamentoDisplayValidationErrorMessages = false;
 
+            LoteDeProducaoViewModel.IdEmpresa = AuthenticationViewModel.UserUnidadeDeNegocioId;
             await LoteDeProducaoViewModel.SaveAsync();
             await PopulateLists();
             ShowPlanejamentoModal = false;
@@ -282,5 +285,36 @@ public partial class Index
         ListaDoacoes = await AtividadeViewModel.GetAllDoacoesAsync();
 
         PopulateAtividadeListaTipos(true, true);
+    }
+
+    private async Task OnDoacaoSelected(
+        RowSelectEventArgs<Atividade> arg)
+    {
+        if (arg?.Data?.Id != null)
+        {
+            ShowDoacaoModal = true;
+            SelectedDoacao = arg.Data;
+
+
+            var lote = (await LoteDeProducaoViewModel.GetAllAsync()).First(f => f.Id == SelectedDoacao.LoteId);
+
+            SelectedDoacaoEmpresa = (await UnidadeDeNegocioViewModel.GetAllAsync()).First(f => f.Id == lote.IdEmpresa);
+
+            SelectedDoacao.IdEmpresa = SelectedDoacaoEmpresa.Id;
+            SelectedDoacao.NomeEmpresa = SelectedDoacaoEmpresa.Nome;
+        }
+    }
+
+    public UnidadeDeNegocio? SelectedDoacaoEmpresa { get; set; }
+    public Atividade? SelectedDoacao { get; set; }
+
+    public bool ShowDoacaoModal { get; set; }
+
+    private Task OnDoacaoModalFecharClicked()
+    {
+        ShowDoacaoModal = false;
+        SelectedDoacao = null;
+
+        return Task.CompletedTask;
     }
 }

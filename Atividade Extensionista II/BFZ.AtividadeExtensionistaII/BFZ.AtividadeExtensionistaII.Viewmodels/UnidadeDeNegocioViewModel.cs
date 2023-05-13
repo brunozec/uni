@@ -157,6 +157,11 @@ public class UnidadeDeNegocioViewModel : BaseViewModel
         });
     }
 
+    public async Task<IEnumerable<UnidadeDeNegocio>> GetAllAsync()
+    {
+        return await _unidadeDeNegocioService.GetAllAsync();
+    }
+    
     public async Task<IEnumerable<UnidadeDeNegocio>> GetAllEntidadesAsync()
     {
         return await _unidadeDeNegocioService.GetAllEntidadesAsync();

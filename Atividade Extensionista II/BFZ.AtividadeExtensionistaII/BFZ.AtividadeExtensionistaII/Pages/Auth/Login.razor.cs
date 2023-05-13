@@ -29,30 +29,32 @@ public partial class Login
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    private async Task CheckUserLoggedIn()
+    private Task CheckUserLoggedIn()
     {
-        if (await AuthenticationViewModel.CheckLoggedUser())
+        if (AuthenticationViewModel.CheckLoggedUser())
         {
             App.Current.MainPage.Navigation.PushAsync(new IndexPage(), false);
         }
-    }
-
-    private Task HandleValidSubmit(
-        EditContext arg)
-    {
-        _displayValidationErrorMessages = false;
 
         return Task.CompletedTask;
     }
 
-    private async Task OnInvalidSubmit(
+    private async Task HandleValidSubmit(
         EditContext arg)
     {
-        _displayValidationErrorMessages = true;
+        _displayValidationErrorMessages = false;
+
 
         if (await AuthenticationViewModel.Login())
         {
             App.Current.MainPage.Navigation.PushAsync(new IndexPage(), false);
         }
+    }
+
+    private Task OnInvalidSubmit(
+        EditContext arg)
+    {
+        _displayValidationErrorMessages = true;
+        return Task.CompletedTask;
     }
 }

@@ -154,7 +154,7 @@ public class AtividadeViewModel : BaseViewModel
             lote.Plantado = true;
             lote.Situacao = Situacao.EmProducao;
         }
-        
+
         if (Tipo == TipoAtividade.Descarte)
         {
             loteCloned.DataEncerramento = Data;
@@ -173,7 +173,11 @@ public class AtividadeViewModel : BaseViewModel
             loteCloned.Situacao = Situacao.Doado;
         }
 
-        await _loteDeProducaoService.Save(loteCloned);
+        if (!dividir)
+            await _loteDeProducaoService.Save(lote);
+
+        if (dividir)
+            await _loteDeProducaoService.Save(loteCloned);
 
         if (IdEntidade != null)
         {

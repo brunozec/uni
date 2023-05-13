@@ -7,7 +7,7 @@ namespace BFZ.AtividadeExtensionistaII.Domain.Models;
 /// Classe que representa o lote de produção que será planejado e produzido
 /// </summary>
 [Table("lote_de_producao")]
-public class LoteDeProducao: IEntityId
+public class LoteDeProducao : IEntityId
 {
     /// <summary>
     /// Código indentificador da entidade
@@ -19,9 +19,8 @@ public class LoteDeProducao: IEntityId
     /// Código identificador do cadastro do produto
     /// </summary>
     public int? IdProduto { get; set; }
-    
-    [SQLite.Ignore]
-    public string DescricaoProduto { get; set; }
+
+    [SQLite.Ignore] public string DescricaoProduto { get; set; }
 
     /// <summary>
     /// Quantidade (unidades) do produto 
@@ -32,7 +31,7 @@ public class LoteDeProducao: IEntityId
     /// Data de plantio do produto
     /// </summary>
     public DateTime? DataPlanejado { get; set; }
-    
+
     public DateTime? DataPlantio { get; set; }
 
     /// <summary>
@@ -44,11 +43,11 @@ public class LoteDeProducao: IEntityId
     /// Observações
     /// </summary>
     public string? Observacao { get; set; }
-    
+
     public bool Plantado { get; set; }
-    
+
     public Situacao Situacao { get; set; }
-    
+
     [Ignore]
     public string SituacaoDescricao
     {
@@ -71,4 +70,6 @@ public class LoteDeProducao: IEntityId
             }
         }
     }
+
+    public int? IdEmpresa { get; set; }
 }

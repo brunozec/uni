@@ -62,6 +62,12 @@ public class Atividade : IEntityId
     public int? IdEntidade { get; set; }
     
     public string? NomeEntidade { get; set; }
+
+    [Ignore]
+    public int? IdEmpresa { get; set; }
+    
+    [Ignore]
+    public string? NomeEmpresa { get; set; }
 }
 
 public class AtividadeTipo
